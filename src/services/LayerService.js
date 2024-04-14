@@ -19,4 +19,8 @@ export class LayerService{
         let res = await axios.get(`${process.env.REACT_APP_CLASSIFIER}/layers/${id}`)
         return res.data
     }
+
+    static async patchLayer(id, layer) {
+        await axios.patch(`${process.env.REACT_APP_CLASSIFIER}/layers/${id}`, layer)
+    }
 }

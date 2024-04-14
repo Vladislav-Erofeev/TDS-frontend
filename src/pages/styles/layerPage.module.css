@@ -40,3 +40,24 @@
     font-size: 11pt;
     filter: invert(51%) sepia(82%) saturate(3518%) hue-rotate(184deg) brightness(94%) contrast(90%);
 }
+
+.info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.edit_btn {
+    background-color: #1b8ae5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    width: 150px;
+    border-radius: 10px;
+    font-size: 12pt;
+    cursor: pointer;
+}
+
+.edit_btn:hover {
+    background-color: #1579d0;
+}
