@@ -1,0 +1,52 @@
+.layer {
+    border: solid;
+    padding: 10px 30px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-color: black;
+    color: black;
+    text-decoration: none;
+}
+
+.layer button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.layer button:hover {
+    transform: scale(110%);
+}
+
+.list {
+    width: 80%;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list div {
+    cursor: pointer;
+}
+
+.add_layer {
+    width: max-content;
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 10px;
+    border-style: dashed;
+    border-color: #1b8ae5;
+    cursor: pointer;
+}
+
+
+.add_layer span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11pt;
+    filter: invert(51%) sepia(82%) saturate(3518%) hue-rotate(184deg) brightness(94%) contrast(90%);
+}

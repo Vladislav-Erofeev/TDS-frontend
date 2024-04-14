@@ -1,0 +1,47 @@
+.modal {
+    background-color: white;
+    padding: 30px 20px;
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+}
+
+.close_btn {
+    background-color: #de4141;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+.save_btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+    border-radius: 5px;
+    background-color: #1b8ae5;
+    color: white;
+    border: none;
+    font-size: 11pt;
+    cursor: pointer;
+}
+
+.save_btn:hover {
+    background-color: #1579d0;
+}
+
+.inputs {
+    width: 90%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
