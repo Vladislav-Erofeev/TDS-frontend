@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import {LayerService} from "../services/LayerService";
-import {CircularProgress, TextField} from "@mui/material";
+import {Breadcrumbs, CircularProgress, Link, TextField} from "@mui/material";
 import styles from './styles/layerPage.module.css'
 import AddCodeModal from "../components/AddCodeModal";
+import {Link as RouterLink,} from 'react-router-dom';
 
 const LayerPage = () => {
     const {id} = useParams()
@@ -32,8 +33,14 @@ const LayerPage = () => {
     }
     return (
         <>
+
             {layer === null ? <CircularProgress/> :
                 <div className={styles.main}>
+                    <Breadcrumbs aria-label="breadcrumb">
+                        <Link underline="hover" color="inherit" component={RouterLink} to={'/admin'}>Главная</Link>
+                        <Link underline="hover" color="inherit" component={RouterLink} to={'/admin/classifier'}>Слои</Link>
+                        <Link underline="hover" component={RouterLink} to={`/admin/classifier/layers/${layer.id}`}>{layer.name}</Link>
+                    </Breadcrumbs>
                     {editMode ? <TextField label={'Название'}
                                            value={layer.name}
                                            onChange={(e) => {
