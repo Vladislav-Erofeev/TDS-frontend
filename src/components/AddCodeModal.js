@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Backdrop, CircularProgress, TextField} from "@mui/material";
 import styles from './styles/addCodeModal.module.css'
 import {CodeService} from "../services/CodeService";
+import SelectLayerModal from "./SelectLayerModal";
 
 const nullCode = {
     code: '',
@@ -9,14 +10,16 @@ const nullCode = {
     name: '',
     layer: null
 }
-const AddCodeModal = ({open, setOpen, layer, add}) => {
+const AddCodeModal = ({open, setOpen, layer, add, selectLayer}) => {
     const [isLoading, setIsLoading] = useState(false)
+    const [openSelectLayer, setOpenSelectLayer] = useState(false)
     const [code, setCode] = useState(nullCode)
 
     const saveCode = () => {
         setIsLoading(true)
         let push = async () => {
-            code.layer = layer
+            if (!selectLayer)
+                code.layer = layer
             let res = await CodeService.saveCode(code)
             setIsLoading(false)
             setCode(nullCode)
@@ -25,6 +28,10 @@ const AddCodeModal = ({open, setOpen, layer, add}) => {
         }
 
         push()
+    }
+
+    const setLayer = (layer) => {
+        setCode(code => ({...code, layer: layer}))
     }
     return (
         <Backdrop open={open}>
@@ -49,6 +56,13 @@ const AddCodeModal = ({open, setOpen, layer, add}) => {
                                onChange={(e) => {
                                    setCode({...code, description: e.target.value})
                                }} rows={4}/>
+
+                    {code.layer != null ? <p className={styles.layer}>{code.layer.name} - {code.layer.hname}</p> : null}
+                    {
+                        selectLayer ? <button className={styles.selectLayer} onClick={() => {
+                            setOpenSelectLayer(true)
+                        }}>выбрать слой</button> : null
+                    }
                     {isLoading ? <CircularProgress sx={{
                             margin: 'auto'
                         }}/> :
@@ -59,6 +73,7 @@ const AddCodeModal = ({open, setOpen, layer, add}) => {
                         </button>}
                 </div>
             </div>
+            <SelectLayerModal setLayer={setLayer} setOpen={setOpenSelectLayer} open={openSelectLayer} />
         </Backdrop>
     );
 };

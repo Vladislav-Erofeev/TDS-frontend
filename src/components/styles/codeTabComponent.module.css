@@ -1,34 +1,10 @@
-.layer {
-    border: solid;
-    padding: 10px 30px;
-    border-radius: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 30px;
-    border-color: black;
-    color: black;
-    text-decoration: none;
-}
-
-.layer button {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.layer button:hover {
-    transform: scale(110%);
-}
-
 .list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     width: 80%;
     margin: 40px auto;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
-}
-
-.list div {
-    cursor: pointer;
 }
 
 .add_layer {

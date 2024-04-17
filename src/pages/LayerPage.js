@@ -5,6 +5,8 @@ import {Breadcrumbs, CircularProgress, Link, TextField} from "@mui/material";
 import styles from './styles/layerPage.module.css'
 import AddCodeModal from "../components/AddCodeModal";
 import {Link as RouterLink,} from 'react-router-dom';
+import CodeComponent from "../components/CodeComponent";
+import {CodeService} from "../services/CodeService";
 
 const LayerPage = () => {
     const {id} = useParams()
@@ -31,6 +33,19 @@ const LayerPage = () => {
         }
         push()
     }
+
+    const removeCode = (id) => {
+        let push = async () => {
+            CodeService.deleteCode(id)
+        }
+
+        push()
+        setLayer(layer => {
+            let newLayer = {...layer}
+            newLayer.codes.splice(newLayer.codes.indexOf(c => c.id === id), 1)
+            return newLayer
+        })
+    }
     return (
         <>
 
@@ -38,8 +53,10 @@ const LayerPage = () => {
                 <div className={styles.main}>
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link underline="hover" color="inherit" component={RouterLink} to={'/admin'}>Главная</Link>
-                        <Link underline="hover" color="inherit" component={RouterLink} to={'/admin/classifier'}>Слои</Link>
-                        <Link underline="hover" component={RouterLink} to={`/admin/classifier/layers/${layer.id}`}>{layer.name}</Link>
+                        <Link underline="hover" color="inherit" component={RouterLink}
+                              to={'/admin/classifier'}>Слои</Link>
+                        <Link underline="hover" component={RouterLink}
+                              to={`/admin/classifier/layers/${layer.id}`}>{layer.name}</Link>
                     </Breadcrumbs>
                     {editMode ? <TextField label={'Название'}
                                            value={layer.name}
@@ -91,17 +108,10 @@ const LayerPage = () => {
                     <div>
                         <h1>Кодовый состав</h1>
                         <div className={styles.codes_list}>
-                            {layer.codes.map(code =>
-                                <div className={styles.code} key={code.id}>
-                                    <p>{code.code} - {code.name}</p>
-                                    <p>{code.creationDate}</p>
-                                    <button style={{
-                                        background: 'none',
-                                        border: 'none'
-                                    }}>
-                                        <img src={'/icons/remove.svg'} width={'20px'}/>
-                                    </button>
-                                </div>)}
+                            {layer.codes.length === 0 ?
+                                <h2 className={styles.empty_list}>Список пуст</h2>
+                                :
+                            layer.codes.map(code => <CodeComponent remove={removeCode} code={code}/>)}
                         </div>
                         <button className={styles.add_code} onClick={() => {
                             setOpenCodeModal(true)

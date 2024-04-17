@@ -44,3 +44,21 @@
 .save_btn:hover {
     background-color: #1579d0;
 }
+
+.selectLayer {
+    width: max-content;
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 10px;
+    border-style: dashed;
+    border-color: #1b8ae5;
+    color: #1b8ae5;
+    cursor: pointer;
+    margin: auto;
+}
+
+.layer {
+    border-style: solid;
+    padding: 10px 20px;
+    border-radius: 10px;
+}

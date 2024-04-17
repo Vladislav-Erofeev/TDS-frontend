@@ -3,6 +3,7 @@ import styles from './styles/classifierPage.module.css'
 import {Tab, Tabs} from "@mui/material";
 import TabComponent from "../components/TabComponent";
 import LayersComponent from "../components/LayersComponent";
+import CodesTabComponent from "../components/CodesTabComponent";
 
 const ClassifierPage = () => {
     const [tab, setTab] = useState(0)
@@ -13,11 +14,12 @@ const ClassifierPage = () => {
             <Tabs value={tab} onChange={(e, v) => {
                 setTab(v)
             }}>
-                <Tab label={'Слои'} />
-                <Tab label={'Атрибуты'} />
-                <Tab label={'Коды'} />
+                <Tab label={'Слои'}/>
+                <Tab label={'Атрибуты'}/>
+                <Tab label={'Коды'}/>
             </Tabs>
-            <TabComponent value={0} currentValue={tab} component={<LayersComponent />}/>
+            <TabComponent value={0} currentValue={tab} component={<LayersComponent/>}/>
+            <TabComponent value={2} currentValue={tab} component={<CodesTabComponent/>}/>
         </div>
     );
 };

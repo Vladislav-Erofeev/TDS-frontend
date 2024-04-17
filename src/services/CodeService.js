@@ -9,4 +9,9 @@ export class CodeService {
     static async deleteCode(id) {
         await axios.delete(`${process.env.REACT_APP_CLASSIFIER}/codes/${id}`)
     }
+
+    static async getAll() {
+        let res = await axios.get(`${process.env.REACT_APP_CLASSIFIER}/codes`)
+        return res.data
+    }
 }
