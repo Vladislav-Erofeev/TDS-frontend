@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    margin: 30px auto;
+    align-items: center;
+}
+
+.header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.header ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.header li {
+    list-style-type: none;
+}
+
+.header li a {
+    color: black;
+    text-decoration: none;
+}
+
+.profile {
+    padding: 10px 20px;
+    font-size: 12pt;
+    color: white;
+    background-color: #1c8feb;
+    border: none;
+    text-decoration: none;
+}

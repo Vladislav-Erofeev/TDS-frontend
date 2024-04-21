@@ -33,7 +33,7 @@ const LayersComponent = () => {
         <div>
             <div className={styles.list}>
                 {
-                    layers.map(item => <NavLink to={`/admin/classifier/layers/${item.id}`} key={item.id}
+                    layers.map(item => <NavLink to={`layers/${item.id}`} key={item.id}
                                                 className={styles.layer}>
                         <p>{item.name} - {item.hname}</p>
                         <p>{item.creationDate}</p>

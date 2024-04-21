@@ -11,9 +11,13 @@ const ClassifierPage = () => {
     return (
         <div className={styles.main}>
             <h1>Классификатор</h1>
-            <p>Здесь вы можете просматривать классификатор и изменять его</p>
+            <p style={{
+                marginTop: '10px'
+            }}>Здесь вы можете просматривать классификатор и изменять его</p>
             <Tabs value={tab} onChange={(e, v) => {
                 setTab(v)
+            }} sx={{
+                marginTop: '30px'
             }}>
                 <Tab label={'Слои'}/>
                 <Tab label={'Атрибуты'}/>

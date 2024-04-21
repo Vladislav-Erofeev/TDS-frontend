@@ -65,11 +65,11 @@ const LayerPage = () => {
             {layer === null ? <CircularProgress/> : <>
                 <div className={styles.main}>
                     <Breadcrumbs aria-label="breadcrumb">
-                        <Link underline="hover" color="inherit" component={RouterLink} to={'/admin'}>Главная</Link>
+                        <Link underline="hover" color="inherit" component={RouterLink} to={'/'}>Главная</Link>
                         <Link underline="hover" color="inherit" component={RouterLink}
-                              to={'/admin/classifier'}>Слои</Link>
+                              to={'/classifier'}>Слои</Link>
                         <Link underline="hover" component={RouterLink}
-                              to={`/admin/classifier/layers/${layer.id}`}>{layer.name}</Link>
+                              to={`/classifier/layers/${layer.id}`}>{layer.name}</Link>
                     </Breadcrumbs>
                     {editMode ? <TextField label={'Название'}
                                            value={layer.name}
