@@ -4,6 +4,7 @@ import {Tab, Tabs} from "@mui/material";
 import TabComponent from "../components/TabComponent";
 import LayersComponent from "../components/LayersComponent";
 import CodesTabComponent from "../components/CodesTabComponent";
+import AttributesTabComponent from "../components/AttributesTabComponent";
 
 const ClassifierPage = () => {
     const [tab, setTab] = useState(0)
@@ -19,6 +20,7 @@ const ClassifierPage = () => {
                 <Tab label={'Коды'}/>
             </Tabs>
             <TabComponent value={0} currentValue={tab} component={<LayersComponent/>}/>
+            <TabComponent value={1} currentValue={tab} component={<AttributesTabComponent/>}/>
             <TabComponent value={2} currentValue={tab} component={<CodesTabComponent/>}/>
         </div>
     );
