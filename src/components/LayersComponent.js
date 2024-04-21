@@ -3,6 +3,7 @@ import {LayerService} from "../services/LayerService";
 import styles from './styles/layerComponent.module.css'
 import AddLayerModal from "./AddLayerModal";
 import {NavLink} from "react-router-dom";
+import {hasRole} from "../data/functions";
 
 const LayersComponent = () => {
     const [layers, setLayers] = useState([])
@@ -48,11 +49,11 @@ const LayersComponent = () => {
                     </NavLink>)
                 }
             </div>
-            <button className={styles.add_layer} onClick={() => {
+            {hasRole("ADMIN") ? <button className={styles.add_layer} onClick={() => {
                 setOpenAddLayerModal(true)
             }}>
                 <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить слой</span>
-            </button>
+            </button> : null}
             <AddLayerModal add={addLayerToArray} open={openAddLayerModal} close={setOpenAddLayerModal}/>
         </div>
     );

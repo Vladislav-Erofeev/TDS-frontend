@@ -3,6 +3,7 @@ import {CodeService} from "../services/CodeService";
 import CodeComponent from "./CodeComponent";
 import styles from './styles/codeTabComponent.module.css'
 import AddCodeModal from "./AddCodeModal";
+import {hasRole} from "../data/functions";
 
 const CodesTabComponent = () => {
     const [list, setList] = useState([])
@@ -33,11 +34,12 @@ const CodesTabComponent = () => {
                 {list.length === 0 ? <h2>Список пуст</h2> :
                     list.map(code => <CodeComponent remove={removeCode} code={code}/>)}
             </div>
-            <button className={styles.add_layer} onClick={() => {
+            {hasRole('ADMIN') ? <button className={styles.add_layer} onClick={() => {
                 setOpenCodeModal(true)
             }}>
                 <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить код</span>
-            </button>
+            </button> : null}
+
             <AddCodeModal selectLayer add={addCode} open={openAddCodeModal} setOpen={setOpenCodeModal}/>
         </div>
     );

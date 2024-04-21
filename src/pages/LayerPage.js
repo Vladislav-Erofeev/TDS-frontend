@@ -8,6 +8,7 @@ import {Link as RouterLink,} from 'react-router-dom';
 import CodeComponent from "../components/CodeComponent";
 import {CodeService} from "../services/CodeService";
 import SelectAttributesModal from "../components/SelectAttributesModal";
+import {hasRole} from "../data/functions";
 
 const LayerPage = () => {
     const {id} = useParams()
@@ -110,14 +111,13 @@ const LayerPage = () => {
                             <p>{layer.creationDate}</p>
                         </div>
                     </div>
-                    <button className={styles.edit_btn} onClick={() => {
+                    {hasRole("ADMIN") ? <button className={styles.edit_btn} onClick={() => {
                         if (editMode)
                             saveChanges()
                         setEditMode(!editMode)
                     }}>
                         {editMode ? 'сохранить' : 'редактировать'}
-                    </button>
-
+                    </button> : null}
                     <div>
                         <h1>Кодовый состав</h1>
                         <div className={styles.codes_list}>
@@ -126,11 +126,11 @@ const LayerPage = () => {
                                 :
                                 layer.codes.map(code => <CodeComponent remove={removeCode} code={code}/>)}
                         </div>
-                        <button className={styles.add_code} onClick={() => {
+                        {hasRole("ADMIN") ? <button className={styles.add_code} onClick={() => {
                             setOpenCodeModal(true)
                         }}>
                             <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить код</span>
-                        </button>
+                        </button> : null}
                     </div>
                     <div>
                         <h1>Атрибуты слоя</h1>
@@ -141,11 +141,11 @@ const LayerPage = () => {
                                 <p>{item.creationDate}</p>
                             </div>)}
                         </div>
-                        <button className={styles.add_code} onClick={() => {
+                        {hasRole("ADMIN") ? <button className={styles.add_code} onClick={() => {
                             setOpenAddAttributeModal(true)
                         }}>
                             <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить атрибут</span>
-                        </button>
+                        </button> : null}
                     </div>
                 </div>
                 <AddCodeModal add={addCode} layer={layer} open={openCodeModal} setOpen={setOpenCodeModal}/>

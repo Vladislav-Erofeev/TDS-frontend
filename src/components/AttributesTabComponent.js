@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './styles/attributesTabComponent.module.css'
 import AddAttributeModal from "./AddAttributeModal";
 import {AttributeService} from "../services/AttributeService";
+import {hasRole} from "../data/functions";
 
 const AttributesTabComponent = () => {
     const [openAddAttribute, setOpenAddAttribute] = useState(false)
@@ -26,11 +27,12 @@ const AttributesTabComponent = () => {
                     <p>{attribute.creationDate}</p>
                 </div>)}
             </div>
-            <button className={styles.add_layer} onClick={() => {
+            {hasRole("ADMIN") ? <button className={styles.add_layer} onClick={() => {
                 setOpenAddAttribute(true)
             }}>
                 <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить атрибут</span>
-            </button>
+            </button> : null}
+
             <AddAttributeModal callback={addAttribute} open={openAddAttribute} setOpen={setOpenAddAttribute}/>
         </div>
     );
