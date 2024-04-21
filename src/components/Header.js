@@ -13,9 +13,9 @@ const Header = () => {
                 </h1>
                 <nav>
                     <ul>
-                        <li><NavLink to={'/map'}>карта</NavLink></li>
-                        <li><NavLink to={'/objects'}>объекты</NavLink></li>
-                        <li><NavLink to={'/classifier'}>классификатор</NavLink></li>
+                        <li><NavLink to={'map'}>карта</NavLink></li>
+                        <li><NavLink to={'objects'}>объекты</NavLink></li>
+                        <li><NavLink to={'classifier'}>классификатор</NavLink></li>
                     </ul>
                 </nav>
                 <NavLink className={styles.profile} to={'/profile'}>
