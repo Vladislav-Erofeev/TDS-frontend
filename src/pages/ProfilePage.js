@@ -25,6 +25,9 @@ const ProfilePage = () => {
                     <div className={styles.user_data}>
                         <div className={styles.avatar}>
                             <Avatar {...stringAvatar(`${user.name} ${user.surname}`)} />
+                            <button className={styles.edit_btn}>
+                                редактировать
+                            </button>
                             <button className={styles.logout} onClick={() => {
                                 TokenService.logout()
                             }}>выйти

@@ -50,3 +50,18 @@
     background-color: #f53b3b;
     color: white;
 }
+
+.edit_btn {
+    padding: 10px 20px;
+    font-size: 12pt;
+    border: none;
+    background-color: #1c8ee9;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.15s ease-in;
+    color: white;
+}
+
+.edit_btn:hover {
+    background-color: #1778c5;
+}
