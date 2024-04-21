@@ -23,7 +23,7 @@
     padding: 10px 20px;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .attributes_list {

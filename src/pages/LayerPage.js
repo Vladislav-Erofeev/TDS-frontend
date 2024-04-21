@@ -7,12 +7,14 @@ import AddCodeModal from "../components/AddCodeModal";
 import {Link as RouterLink,} from 'react-router-dom';
 import CodeComponent from "../components/CodeComponent";
 import {CodeService} from "../services/CodeService";
+import SelectAttributesModal from "../components/SelectAttributesModal";
 
 const LayerPage = () => {
     const {id} = useParams()
     const [layer, setLayer] = useState(null)
     const [openCodeModal, setOpenCodeModal] = useState(false)
     const [editMode, setEditMode] = useState(false)
+    const [openAddAttributeModal, setOpenAddAttributeModal] = useState(false)
     useEffect(() => {
         const fetch = async () => {
             setLayer(await LayerService.getLayerById(id))
@@ -28,7 +30,7 @@ const LayerPage = () => {
 
     const saveChanges = () => {
         const push = async () => {
-            let data = {...layer, codes: null, attributes: null}
+            let data = {...layer, codes: null}
             LayerService.patchLayer(layer.id, data)
         }
         push()
@@ -46,10 +48,21 @@ const LayerPage = () => {
             return newLayer
         })
     }
+
+    const saveSelectedLayers = (selected) => {
+        let newLayer = {...layer, attributes: selected}
+        setLayer(newLayer)
+
+        const push = async () => {
+            await LayerService.patchLayer(layer.id, {...newLayer, codes: null})
+        }
+
+        push()
+    }
     return (
         <>
 
-            {layer === null ? <CircularProgress/> :
+            {layer === null ? <CircularProgress/> : <>
                 <div className={styles.main}>
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link underline="hover" color="inherit" component={RouterLink} to={'/admin'}>Главная</Link>
@@ -111,7 +124,7 @@ const LayerPage = () => {
                             {layer.codes.length === 0 ?
                                 <h2 className={styles.empty_list}>Список пуст</h2>
                                 :
-                            layer.codes.map(code => <CodeComponent remove={removeCode} code={code}/>)}
+                                layer.codes.map(code => <CodeComponent remove={removeCode} code={code}/>)}
                         </div>
                         <button className={styles.add_code} onClick={() => {
                             setOpenCodeModal(true)
@@ -119,11 +132,31 @@ const LayerPage = () => {
                             <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить код</span>
                         </button>
                     </div>
+                    <div>
+                        <h1>Атрибуты слоя</h1>
+                        <div className={styles.codes_list}>
+                            {layer.attributes.map(item => <div className={styles.attribute_item}>
+                                <p>{item.name} - {item.hname}</p>
+                                <p>{item.dataType}</p>
+                                <p>{item.creationDate}</p>
+                            </div>)}
+                        </div>
+                        <button className={styles.add_code} onClick={() => {
+                            setOpenAddAttributeModal(true)
+                        }}>
+                            <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить атрибут</span>
+                        </button>
+                    </div>
                 </div>
+                <AddCodeModal add={addCode} layer={layer} open={openCodeModal} setOpen={setOpenCodeModal}/>
+                <SelectAttributesModal selected={layer.attributes} callback={saveSelectedLayers}
+                                       open={openAddAttributeModal}
+                                       setOpen={setOpenAddAttributeModal}/>
+            </>
             }
-            <AddCodeModal add={addCode} layer={layer} open={openCodeModal} setOpen={setOpenCodeModal}/>
         </>
-    );
+    )
+
 };
 
 export default LayerPage;

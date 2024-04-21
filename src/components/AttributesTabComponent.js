@@ -22,6 +22,7 @@ const AttributesTabComponent = () => {
             <div className={styles.attributes_list}>
                 {attributes.map(attribute => <div className={styles.attribute}>
                     <p>{attribute.name} - {attribute.hname}</p>
+                    <p>{attribute.dataType}</p>
                     <p>{attribute.creationDate}</p>
                 </div>)}
             </div>
