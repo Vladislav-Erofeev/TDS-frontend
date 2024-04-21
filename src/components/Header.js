@@ -2,6 +2,7 @@ import React from 'react';
 import {Outlet} from "react-router";
 import {NavLink} from "react-router-dom";
 import styles from './styles/header.module.css'
+import {hasRole} from "../data/functions";
 
 const Header = () => {
     return (
@@ -18,9 +19,14 @@ const Header = () => {
                         <li><NavLink to={'classifier'}>классификатор</NavLink></li>
                     </ul>
                 </nav>
-                <NavLink className={styles.profile} to={'/profile'}>
-                    Профиль
-                </NavLink>
+                {
+                    hasRole('ADMIN', 'USER') ? <NavLink className={styles.profile} to={'/profile'}>
+                        Профиль
+                    </NavLink> : <NavLink className={styles.profile} to={'/login'}>
+                        Войти
+                    </NavLink>
+                }
+
             </header>
             <Outlet/>
         </>
