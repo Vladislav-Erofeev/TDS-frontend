@@ -3,8 +3,10 @@ import {Outlet} from "react-router";
 import {NavLink} from "react-router-dom";
 import styles from './styles/header.module.css'
 import {hasRole} from "../data/functions";
+import {useSelector} from "react-redux";
 
 const Header = () => {
+    const user = useSelector(state => state.user)
     return (
         <>
             <header className={styles.header}>
