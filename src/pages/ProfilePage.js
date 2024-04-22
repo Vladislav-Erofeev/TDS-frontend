@@ -52,6 +52,10 @@ const ProfilePage = () => {
                                     <p>Дата рождения: </p>
                                     <p>{user.birthDate ? user.birthDate : 'Не указано'}</p>
                                 </div>
+                                <div>
+                                    <p>Роль: </p>
+                                    <p>{user.role}</p>
+                                </div>
                             </div>
                         </div>
                     </div>

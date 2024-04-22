@@ -16,8 +16,9 @@ const AddAttributeModal = ({open, setOpen, callback}) => {
     const save = () => {
         const push = async () => {
             let res = await AttributeService.save(newAttribute)
-            setIsLoading(true)
+            setIsLoading(false)
             callback(res)
+            setNewAttribute(nullAttribute)
             setOpen(false)
         }
         setIsLoading(true)
