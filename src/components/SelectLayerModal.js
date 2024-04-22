@@ -25,7 +25,7 @@ const SelectLayerModal = ({open,setLayer, setOpen}) => {
                 <h1>Выберите слой</h1>
                 <div className={styles.layer_lsit}>
                     {layers.map(layer =>
-                        <div className={styles.layer} onClick={() => {
+                        <div key={layer.id} className={styles.layer} onClick={() => {
                             setLayer(layer)
                             setOpen(false)
                         }}>

@@ -139,7 +139,7 @@ const LayerPage = () => {
                             {layer.codes.length === 0 ?
                                 <h2 className={styles.empty_list}>Список пуст</h2>
                                 :
-                                layer.codes.map(code => <CodeComponent remove={removeCode} code={code}/>)}
+                                layer.codes.map(code => <CodeComponent key={code.id} remove={removeCode} code={code}/>)}
                         </div>
                         {hasRole("ADMIN") ? <button className={styles.add_code} onClick={() => {
                             setOpenCodeModal(true)
@@ -150,7 +150,7 @@ const LayerPage = () => {
                     <div>
                         <h1>Атрибуты слоя</h1>
                         <div className={styles.codes_list}>
-                            {layer.attributes.map(item => <div className={styles.attribute_item}>
+                            {layer.attributes.map(item => <div key={item.id} className={styles.attribute_item}>
                                 <p>{item.name} - {item.hname}</p>
                                 <p>{item.dataType}</p>
                                 <p>{item.creationDate}</p>

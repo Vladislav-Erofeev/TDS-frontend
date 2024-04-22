@@ -32,7 +32,7 @@ const CodesTabComponent = () => {
         <div>
             <div className={styles.list}>
                 {list.length === 0 ? <h2>Список пуст</h2> :
-                    list.map(code => <CodeComponent remove={removeCode} code={code}/>)}
+                    list.map(code => <CodeComponent key={code.id} remove={removeCode} code={code}/>)}
             </div>
             {hasRole('ADMIN') ? <button className={styles.add_layer} onClick={() => {
                 setOpenCodeModal(true)

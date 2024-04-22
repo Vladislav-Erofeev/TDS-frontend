@@ -11,6 +11,10 @@
     transition: 0.4s ease;
 }
 
+.main h1 {
+    text-align: center;
+}
+
 .expand_btn {
     position: absolute;
     top: 10px;
@@ -22,4 +26,71 @@
     border: none;
     transition: 0.4s ease;
     cursor: pointer;
+}
+
+.object_data {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.back_btn {
+    background: none;
+    border: none;
+    width: 70px;
+    font-size: 13pt;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    color: #1c8ee9;
+    transition: 0.15s ease;
+    filter: brightness(0) saturate(100%) invert(42%) sepia(71%) saturate(1137%)
+    hue-rotate(177deg) brightness(98%) contrast(87%);
+}
+
+.back_btn:hover {
+    transform: scale(105%);
+}
+
+.attributes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.save_btn {
+    padding: 10px 20px;
+    background-color: #1c8ee9;
+    color: white;
+    border: none;
+    width: 140px;
+    margin: auto;
+    text-align: center;
+    font-size: 12pt;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.save_btn:hover {
+    background-color: #1c85da;
+}
+
+.select_code {
+    padding: 5px 20px;
+    background-color: white;
+    border: solid;
+    border-color: #1b8ae5;
+    border-radius: 10px;
+    color: #1b8ae5;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.select_code:hover {
+    background-color: #1b8ae5;
+    color: white;
 }

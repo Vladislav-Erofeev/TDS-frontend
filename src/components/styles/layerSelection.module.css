@@ -1,0 +1,22 @@
+.layer {
+    border: solid;
+    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.layer:hover {
+    transform: scale(103%);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}

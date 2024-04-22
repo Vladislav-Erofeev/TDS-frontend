@@ -33,7 +33,7 @@ const AttributesTabComponent = () => {
     return (
         <div>
             <div className={styles.attributes_list}>
-                {attributes.map(attribute => <div className={styles.attribute}>
+                {attributes.map(attribute => <div key={attribute.id} className={styles.attribute}>
                     <p>{attribute.name} - {attribute.hname}</p>
                     <p>{attribute.dataType}</p>
                     <p>{attribute.creationDate}</p>

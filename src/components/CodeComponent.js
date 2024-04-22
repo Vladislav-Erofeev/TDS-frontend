@@ -3,7 +3,7 @@ import styles from './styles/codeComponent.module.css'
 
 const CodeComponent = ({code, remove}) => {
     return (
-        <div className={styles.code} key={code.id}>
+        <div className={styles.code}>
             <p>{code.code} - {code.name}</p>
             <p>{code.creationDate}</p>
             <button style={{
