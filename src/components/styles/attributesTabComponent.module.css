@@ -23,7 +23,17 @@
     padding: 10px 20px;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 150px 150px 25px;
+}
+
+.remove_btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.remove_btn:hover {
+    transform: scale(105%);
 }
 
 .attributes_list {

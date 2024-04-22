@@ -9,8 +9,11 @@ import CodeComponent from "../components/CodeComponent";
 import {CodeService} from "../services/CodeService";
 import SelectAttributesModal from "../components/SelectAttributesModal";
 import {hasRole} from "../data/functions";
+import {useSelector} from "react-redux";
+import {AttributeService} from "../services/AttributeService";
 
 const LayerPage = () => {
+    const user = useSelector(state => state.user)
     const {id} = useParams()
     const [layer, setLayer] = useState(null)
     const [openCodeModal, setOpenCodeModal] = useState(false)
@@ -59,6 +62,18 @@ const LayerPage = () => {
         }
 
         push()
+    }
+
+    const removeAttribute = (item) => {
+        const push =  async () => {
+            await AttributeService.removeAttribute(item.id)
+        }
+        push()
+        setLayer(layer => {
+            let arr = [...layer.attributes]
+            arr.splice(arr.findIndex(attr => item.id === attr.id), 1)
+            return {...layer, attributes: arr}
+        })
     }
     return (
         <>
@@ -139,6 +154,11 @@ const LayerPage = () => {
                                 <p>{item.name} - {item.hname}</p>
                                 <p>{item.dataType}</p>
                                 <p>{item.creationDate}</p>
+                                <button className={styles.remove_btn} onClick={() => {
+                                    removeAttribute(item)
+                                }}>
+                                    <img src={'/icons/remove.svg'} width={'20px'}/>
+                                </button>
                             </div>)}
                         </div>
                         {hasRole("ADMIN") ? <button className={styles.add_code} onClick={() => {

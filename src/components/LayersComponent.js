@@ -4,8 +4,10 @@ import styles from './styles/layerComponent.module.css'
 import AddLayerModal from "./AddLayerModal";
 import {NavLink} from "react-router-dom";
 import {hasRole} from "../data/functions";
+import {useSelector} from "react-redux";
 
 const LayersComponent = () => {
+    const user = useSelector(state => state.user)
     const [layers, setLayers] = useState([])
     const [openAddLayerModal, setOpenAddLayerModal] = useState(false)
     useEffect(() => {

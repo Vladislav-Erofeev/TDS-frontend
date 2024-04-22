@@ -41,6 +41,7 @@ const SelectAttributesModal = ({open, setOpen, callback, selected}) => {
                         handleClick(item)
                     }} className={isSelected(item) ? styles.selected : styles.layer}>
                         <p>{item.name} - {item.hname}</p>
+                        <p>{item.dataType}</p>
                     </button>)}
                 </div>
                 <button className={styles.save_btn} onClick={() => {

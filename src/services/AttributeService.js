@@ -10,4 +10,8 @@ export class AttributeService {
         let res = await axios.post(`${process.env.REACT_APP_CLASSIFIER}/attributes`, attribute)
         return res.data
     }
+
+    static async removeAttribute(id) {
+        await axios.delete(`${process.env.REACT_APP_CLASSIFIER}/attributes/${id}`)
+    }
 }

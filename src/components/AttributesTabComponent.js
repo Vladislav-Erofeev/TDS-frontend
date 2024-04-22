@@ -18,6 +18,18 @@ const AttributesTabComponent = () => {
     const addAttribute = (attribute) => {
         setAttributes(attributes => ([...attributes, attribute]))
     }
+
+    const removeAttribute = (item) => {
+        const push =  async () => {
+            await AttributeService.removeAttribute(item.id)
+        }
+        push()
+        setAttributes(attributes => {
+            let arr = [...attributes]
+            arr.splice(arr.findIndex(attr => attr.id === item.id), 1)
+            return arr
+        })
+    }
     return (
         <div>
             <div className={styles.attributes_list}>
@@ -25,6 +37,11 @@ const AttributesTabComponent = () => {
                     <p>{attribute.name} - {attribute.hname}</p>
                     <p>{attribute.dataType}</p>
                     <p>{attribute.creationDate}</p>
+                    <button className={styles.remove_btn} onClick={() => {
+                        removeAttribute(attribute)
+                    }}>
+                        <img src={'/icons/remove.svg'} width={'20px'}/>
+                    </button>
                 </div>)}
             </div>
             {hasRole("ADMIN") ? <button className={styles.add_layer} onClick={() => {

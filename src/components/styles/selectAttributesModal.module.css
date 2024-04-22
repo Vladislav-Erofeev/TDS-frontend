@@ -32,6 +32,9 @@
     font-size: 12pt;
     cursor: pointer;
     transition: 0.3s ease;
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    align-items: start;
 }
 
 .selected {
