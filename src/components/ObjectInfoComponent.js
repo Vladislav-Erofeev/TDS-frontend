@@ -87,9 +87,17 @@ const ObjectInfoComponent = ({map}) => {
     const addDraw = () => {
         if (drawRef.current != null)
             map.removeInteraction(drawRef.current)
+        let type = () => {
+            switch (selectedLayer.geometryType) {
+                case "POLYGON":
+                    return 'Polygon'
+                case 'LINE':
+                    return 'LineString'
+            }
+        }
         let draw = new Draw({
             source: source.current,
-            type: 'Polygon'
+            type: type()
         })
         draw.on("drawend", (e) => {
             map.removeInteraction(draw)
