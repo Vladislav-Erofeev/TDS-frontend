@@ -3,6 +3,7 @@ import {GeodataService} from "../services/GeodataService";
 import {GeoJSON} from "ol/format";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
+import {Fill, Stroke, Style} from "ol/style";
 
 const MapObjectsComponent = ({map}) => {
     const geoLayer = useRef()
@@ -19,7 +20,16 @@ const MapObjectsComponent = ({map}) => {
                 source.addFeature(f)
             })
             geoLayer.current = new VectorLayer({
-                source: source
+                source: source,
+                style: new Style({
+                    stroke: new Stroke({
+                        color: '#1c8ee9',
+                        width: 3
+                    }),
+                    fill: new Fill({
+                        color: 'rgba(192,192,192,0.53)'
+                    })
+                })
             })
             map.addLayer(geoLayer.current)
         }
