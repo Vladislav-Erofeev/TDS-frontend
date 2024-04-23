@@ -9,7 +9,7 @@ const MapPage = () => {
         <>
             <MapComponent setMap={setMap} />
             <SearchComponent map={map} />
-            <ObjectInfoComponent />
+            <ObjectInfoComponent map={map} />
         </>
     );
 };
