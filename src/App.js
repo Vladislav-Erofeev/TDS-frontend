@@ -10,6 +10,7 @@ import {useEffect} from "react";
 import {setUserAction} from "./redux/userReducer";
 import {ProfileService} from "./services/ProfileService";
 import {setLoadingAction} from "./redux/LoadReducer";
+import IndexPage from "./pages/IndexPage";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <>
             <Routes>
                 <Route path={'/'} element={<Header/>}>
+                    <Route index element={<IndexPage />}/>
                     <Route path={'map'} element={<MapPage/>}/>
                     <Route path={'classifier'}>
                         <Route element={<ClassifierPage/>} index/>

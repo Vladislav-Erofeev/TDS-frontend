@@ -10,10 +10,12 @@ const Header = () => {
     return (
         <>
             <header className={styles.header}>
-                <h1>
-                    <img src={'/icons/logo.svg'} width={'40px'}/>
-                    TDS
-                </h1>
+                <NavLink to={'/'}>
+                    <h1>
+                        <img src={'/icons/logo.svg'} width={'40px'}/>
+                        TDS
+                    </h1>
+                </NavLink>
                 <nav>
                     <ul>
                         <li><NavLink to={'map'}>карта</NavLink></li>
