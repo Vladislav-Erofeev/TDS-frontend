@@ -1,0 +1,59 @@
+.main {
+    position: absolute;
+    top: 80px;
+    width: 450px;
+    height: calc(100% - 100px);
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: 0.4s ease;
+    z-index: 1;
+}
+
+.object_info {
+    margin: 40px auto;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.properties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.props_list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.verify {
+    width: 200px;
+    padding: 5px 20px;
+    background-color: #1b8ae5;
+    color: white;
+    border: none;
+    margin: auto;
+    font-size: 12pt;
+    cursor: pointer;
+}
+
+.delete {
+    background-color: white;
+    border: solid #de4141;
+    padding: 5px 10px;
+    width: 150px;
+    margin: auto;
+    color: #de4141;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.delete:hover {
+    background-color: #de4141;
+    color: white;
+}
