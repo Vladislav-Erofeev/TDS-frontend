@@ -11,6 +11,7 @@ import {setUserAction} from "./redux/userReducer";
 import {ProfileService} from "./services/ProfileService";
 import {setLoadingAction} from "./redux/LoadReducer";
 import IndexPage from "./pages/IndexPage";
+import SuccessAlert from "./ui/SuccessAlert";
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
         <>
             <Routes>
                 <Route path={'/'} element={<Header/>}>
-                    <Route index element={<IndexPage />}/>
+                    <Route index element={<IndexPage/>}/>
                     <Route path={'map'} element={<MapPage/>}/>
                     <Route path={'classifier'}>
                         <Route element={<ClassifierPage/>} index/>
@@ -41,6 +42,7 @@ function App() {
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
             </Routes>
+            <SuccessAlert/>
         </>
     );
 }

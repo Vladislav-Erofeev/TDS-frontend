@@ -98,6 +98,15 @@ const MapObjectsComponent = ({map}) => {
         push()
     }
 
+    const checkObject = () => {
+        let push = async () => {
+            await GeodataService.setCheckedById(selectedObject.id)
+        }
+
+        push()
+        setSelectedObject({...selectedObject, checked: true})
+    }
+
     return (
         <div style={open ? {left: '0'} : {left: '-100%'}} className={styles.main}>
             <h1>Информация</h1>
@@ -120,7 +129,7 @@ const MapObjectsComponent = ({map}) => {
                 </div>
                 {hasRole('ADMIN') && !selectedObject.checked ?
                     <button className={styles.verify} onClick={() => {
-                        setSelectedObject({...selectedObject, checked: true})
+                        checkObject()
                     }}>Заверить</button> : null}
                 {
                     hasRole('ADMIN', 'USER') ? <button className={styles.delete} onClick={() => {

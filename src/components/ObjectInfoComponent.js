@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './styles/objectInfoComponent.module.css'
 import LayerSelection from "./LayerSelection";
-import {CircularProgress, TextField} from "@mui/material";
+import {Checkbox, CircularProgress, FormControlLabel, TextField} from "@mui/material";
 import {LayerService} from "../services/LayerService";
 import SelectCodesComponent from "./SelectCodesComponent";
 import {GeodataService} from "../services/GeodataService";
@@ -21,10 +21,11 @@ const ObjectInfoComponent = ({map}) => {
     const [selectedLayer, setSelectedLayer] = useState(null)
     const [object, setObject] = useState(nullObjects)
     const [openSelectCodes, setOpenSelectCodes] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
     const source = useRef()
     const drawRef = useRef()
     const [errors, setErrors] = useState({})
+    const [isPushing, setIsPushing] = useState(false)
 
     const setLayer = (item) => {
         const fetch = async () => {
@@ -61,6 +62,8 @@ const ObjectInfoComponent = ({map}) => {
                     case 'DOUBLE':
                         value = parseFloat(object.properties[attribute.name])
                         break
+                    default:
+                        return;
                 }
                 if (isNaN(value)) {
                     hasErrors = true
@@ -78,9 +81,14 @@ const ObjectInfoComponent = ({map}) => {
                     object.properties[attribute.name] = value
                 }
             })
-            if (!hasErrors)
+            if (!hasErrors) {
                 await GeodataService.save(object)
+                setObject(nullObjects)
+                setSelectedLayer(null)
+            }
+            setIsPushing(false)
         }
+        setIsPushing(true)
         push()
     }
 
@@ -188,7 +196,10 @@ const ObjectInfoComponent = ({map}) => {
                     {isLoading ? <CircularProgress sx={{
                         margin: '20px auto'
                     }}/> : <div className={styles.attributes}>
-                        {selectedLayer.attributes.map(attribute =>
+                        {selectedLayer.attributes.map(attribute => attribute.dataType === 'BOOLEAN' ?
+                            <FormControlLabel control={<Checkbox onChange={(e) => {
+                                handleChange(attribute.name, e.target.checked)
+                            }}/>} label={attribute.name}/> :
                             <TextField fullWidth
                                        error={errors[attribute.name] !== null && errors[attribute.name] !== undefined}
                                        key={attribute.id}
@@ -198,13 +209,19 @@ const ObjectInfoComponent = ({map}) => {
                                        }}
                                        label={attribute.name}
                                        helperText={errors[attribute.name] !== null && errors[attribute.name] !== undefined
-                                           ? errors[attribute.name] : attribute.description}/>)}
+                                           ? errors[attribute.name] : attribute.description}/>)
+                        }
                     </div>}
-                    <button className={styles.save_btn} onClick={() => {
-                        save()
-                    }}>
-                        Сохранить
-                    </button>
+
+                    {isPushing ? <CircularProgress sx={{
+                            margin: 'auto'
+                        }}/> :
+                        <button className={styles.save_btn} onClick={() => {
+                            save()
+                        }}>
+                            Сохранить
+                        </button>
+                    }
                     <SelectCodesComponent onSelect={setCode}
                                           codes={selectedLayer.codes}
                                           setOpen={setOpenSelectCodes}

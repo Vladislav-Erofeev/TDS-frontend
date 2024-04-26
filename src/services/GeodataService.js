@@ -29,4 +29,13 @@ export class GeodataService {
             }
         })
     }
+
+    static async setCheckedById(id) {
+        let token = await TokenService.getAccessToken()
+        await axios.post(`${process.env.REACT_APP_GEODATA_URL}/objects/${id}/check`, null, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }
 }
