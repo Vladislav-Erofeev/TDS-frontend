@@ -6,3 +6,21 @@
 .description {
     margin-top: 10px;
 }
+
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 40px auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.list div {
+    border: solid;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-radius: 10px;
+}

@@ -34,6 +34,7 @@ const MapObjectsComponent = ({map}) => {
             duration: 500,
             padding: [0, 50, 0, 500]
         })
+        selectRef.current.getFeatures().clear()
         selectRef.current.getFeatures().push(feture)
         fetch()
     }
