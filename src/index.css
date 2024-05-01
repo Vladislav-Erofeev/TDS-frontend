@@ -1,5 +1,12 @@
+@font-face {
+  font-family: "FuturaRound";
+  src: url("/public/fonts/afuturaround.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
+
 * {
   margin: 0;
   padding: 0;
-  font-family: Roboto;
+  font-family: "FuturaRound";
 }

@@ -8,6 +8,7 @@ import {Select} from "ol/interaction";
 import styles from './styles/mapObjectsComponents.module.css'
 import {CircularProgress} from "@mui/material";
 import {hasRole} from "../data/functions";
+import {useSearchParams} from "react-router-dom";
 
 const nullObject = {
     codeId: '',
@@ -16,18 +17,24 @@ const nullObject = {
     properties: {}
 }
 const MapObjectsComponent = ({map}) => {
-    const geoLayer = useRef()
+    const [geoLayer, setGeoLayer] = useState()
     const selectRef = useRef()
     const [open, setOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [selectedObject, setSelectedObject] = useState(nullObject)
-
+    const [searchParams, setSearchParams] = useSearchParams()
     const fetchObject = (id) => {
         let fetch = async () => {
             setSelectedObject(await GeodataService.getById(id))
             setIsLoading(false)
         }
         setIsLoading(true)
+        let feture = geoLayer.getSource().getFeatureById(id)
+        map.getView().fit(feture.getGeometry(), {
+            duration: 500,
+            padding: [0, 50, 0, 500]
+        })
+        selectRef.current.getFeatures().push(feture)
         fetch()
     }
 
@@ -43,7 +50,7 @@ const MapObjectsComponent = ({map}) => {
                 f.setId(feature.properties.id)
                 source.addFeature(f)
             })
-            geoLayer.current = new VectorLayer({
+            let layer = new VectorLayer({
                 source: source,
                 style: new Style({
                     stroke: new Stroke({
@@ -55,7 +62,8 @@ const MapObjectsComponent = ({map}) => {
                     })
                 })
             })
-            map.addLayer(geoLayer.current)
+            setGeoLayer(layer)
+            map.addLayer(layer)
             const selected = new Style({
                 stroke: new Stroke({
                     color: '#ef5c5c',
@@ -66,24 +74,22 @@ const MapObjectsComponent = ({map}) => {
                 })
             });
             const select = new Select({
-                style: selected
+                style: selected,
             })
             selectRef.current = select
             map.addInteraction(select)
             select.on("select", (e) => {
                 if (e.selected[0] && e.selected[0].get('id') !== undefined) {
-                    fetchObject(e.selected[0].get('id'))
-                    setOpen(true)
+                    setSearchParams({object: e.selected[0].get('id')})
                 } else {
-                    setOpen(false)
-                    setSelectedObject(nullObject)
+                    setSearchParams({})
                 }
             })
         }
         fetch()
 
         return () => {
-            map.removeLayer(geoLayer.current)
+            map.removeLayer(geoLayer)
             map.removeInteraction(selectRef.current)
         }
     }, [map])
@@ -106,6 +112,18 @@ const MapObjectsComponent = ({map}) => {
         push()
         setSelectedObject({...selectedObject, checked: true})
     }
+
+    useEffect(() => {
+        if (geoLayer === null || map == null)
+            return
+        if (searchParams.has('object')) {
+            fetchObject(searchParams.get('object'))
+            setOpen(true)
+        } else {
+            setOpen(false)
+            setSelectedObject(nullObject)
+        }
+    }, [searchParams, geoLayer])
 
     return (
         <div style={open ? {left: '0'} : {left: '-100%'}} className={styles.main}>

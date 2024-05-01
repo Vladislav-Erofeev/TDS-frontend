@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {Axios} from "axios";
 import {TokenService} from "./TokenService";
 
 export class GeodataService {
@@ -37,5 +37,18 @@ export class GeodataService {
                 Authorization: `Bearer ${token}`
             }
         })
+    }
+
+    static async getAllUserObjects() {
+        let token = await TokenService.getAccessToken()
+        let res = await axios.get(`${process.env.REACT_APP_GEODATA_URL}/objects`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                added: true
+            }
+        })
+        return res.data
     }
 }

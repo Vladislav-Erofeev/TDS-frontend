@@ -12,6 +12,7 @@ import {ProfileService} from "./services/ProfileService";
 import {setLoadingAction} from "./redux/LoadReducer";
 import IndexPage from "./pages/IndexPage";
 import SuccessAlert from "./ui/SuccessAlert";
+import ObjectsPage from "./pages/ObjectsPage";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                         <Route element={<ClassifierPage/>} index/>
                         <Route path={'layers/:id'} element={<LayerPage/>}/>
                     </Route>
+                    <Route path={'objects'} element={<ObjectsPage />}/>
                     <Route path={'profile'} element={<ProfilePage/>}/>
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
