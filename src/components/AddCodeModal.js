@@ -73,7 +73,11 @@ const AddCodeModal = ({open, setOpen, layer, add, selectLayer}) => {
                         </button>}
                 </div>
             </div>
-            <SelectLayerModal setLayer={setLayer} setOpen={setOpenSelectLayer} open={openSelectLayer} />
+            {selectLayer ?
+                <SelectLayerModal setLayer={setLayer} setOpen={setOpenSelectLayer} open={openSelectLayer} />
+                : null
+            }
+
         </Backdrop>
     );
 };

@@ -78,7 +78,11 @@ const LayerPage = () => {
     return (
         <>
 
-            {layer === null ? <CircularProgress/> : <>
+            {layer === null ? <CircularProgress sx={{
+                position: 'absolute',
+                left: '50%',
+                transform: 'translateX(-50%)'
+            }}/> : <>
                 <div className={styles.main}>
                     <Breadcrumbs aria-label="breadcrumb">
                         <Link underline="hover" color="inherit" component={RouterLink} to={'/'}>Главная</Link>

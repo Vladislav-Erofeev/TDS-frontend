@@ -10,9 +10,10 @@ const SelectAttributesModal = ({open, setOpen, callback, selected}) => {
         const fetch = async () => {
             setAttributes(await AttributeService.getAll())
         }
-
+        if (!open || attributes.length !== 0)
+            return
         fetch()
-    }, [])
+    }, [open])
 
     const isSelected = (attribute) => {
         return selectedList.findIndex(item => item.id === attribute.id) >= 0;
