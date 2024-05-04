@@ -11,7 +11,11 @@ import {hasRole} from "../data/functions";
 import {useSearchParams} from "react-router-dom";
 
 const nullObject = {
-    codeId: '',
+    code: {
+        id: '',
+        name: '',
+        code: '',
+    },
     creationDate: '',
     checked: false,
     properties: {}
@@ -132,7 +136,7 @@ const MapObjectsComponent = ({map}) => {
             {isLoading ? <CircularProgress sx={{
                 marginTop: '20px'
             }}/> : <div className={styles.object_info}>
-                <h3>Код: {selectedObject.codeId}</h3>
+                <h3>Код: {selectedObject.code.code} - {selectedObject.code.name}</h3>
                 <h3>Дата создания: {selectedObject.creationDate}</h3>
                 <h3 style={selectedObject.checked ? {color: '#2cbb2c'} : {
                     color: '#e33737'
