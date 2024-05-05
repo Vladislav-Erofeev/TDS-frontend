@@ -21,6 +21,9 @@ const Header = () => {
                         <li><NavLink to={'map'}>карта</NavLink></li>
                         <li><NavLink to={'objects'}>объекты</NavLink></li>
                         <li><NavLink to={'classifier'}>классификатор</NavLink></li>
+                        {hasRole("ADMIN") ?
+                            <li><NavLink to={'unchecked'}>На проверку</NavLink></li>
+                            : null}
                     </ul>
                 </nav>
                 {

@@ -1,28 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {GeodataService} from "../services/GeodataService";
-import styles from './styles/objectsPage.module.css'
-import {NavLink} from "react-router-dom";
+import styles from "./styles/objectsPage.module.css";
 import {CircularProgress} from "@mui/material";
-import {hasRole} from "../data/functions";
-import {useNavigate} from "react-router";
+import {NavLink} from "react-router-dom";
 
-const ObjectsPage = () => {
+const UncheckedPage = () => {
     const [objects, setObjects] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
         let fetch = async () => {
-            setObjects(await GeodataService.getAllUserObjects())
+            setObjects(await GeodataService.getAllUncheckedObjects())
             setIsLoading(false)
         }
-        if (!hasRole('ADMIN', 'USER'))
-            navigate('/login')
         setIsLoading(true)
         fetch()
     }, [])
     return (
         <div className={styles.main}>
-            <h1>Добавленные объекты</h1>
+            <h1>Список объектов на проверку</h1>
             <p className={styles.description}>На данной странице вы можете посмотреть
                 весь список добавленных вами объектов</p>
             <div className={styles.list}>
@@ -30,11 +25,7 @@ const ObjectsPage = () => {
                 {objects.map(item => <div key={item.id}>
                     <p>{item.id}</p>
                     <p>{item.creationDate}</p>
-                    <p style={item.checked ? {
-                        color: '#028a0c'
-                    } : {
-                        color: '#b20b0b'
-                    }}>{item.checked ? 'Проверен' : 'Не проверен'}</p>
+                    <NavLink to={'/profile'}>Пользователь</NavLink>
                     <NavLink to={`/map?object=${item.id}`}>перейти</NavLink>
                 </div>)}
             </div>
@@ -42,4 +33,4 @@ const ObjectsPage = () => {
     );
 };
 
-export default ObjectsPage;
+export default UncheckedPage;

@@ -18,9 +18,9 @@
 
 .list div {
     border: solid;
-    display: flex;
+    display: grid;
     width: 100%;
-    justify-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr 60px;
     padding: 10px 20px;
     border-radius: 10px;
 }
