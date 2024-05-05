@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Collapse} from "@mui/material";
 import {useSelector} from "react-redux";
+import {Alert, Collapse} from "@mui/material";
 
-const SuccessAlert = () => {
+const ErrorAlert = () => {
     const [show, setShow] = useState(false)
-    const message = useSelector(state => state.messages.success)
+    const message = useSelector(state => state.messages.error)
     useEffect(() => {
         if (message !== null) {
             setShow(true)
@@ -24,9 +24,9 @@ const SuccessAlert = () => {
         }} in={show}
         >
             <Alert style={{
-                backgroundColor: 'rgba(25,138,17,0.65)',
+                backgroundColor: 'rgba(49,14,14,0.65)',
                 color: 'white'
-            }} severity={'success'} action={
+            }} severity={'error'} action={
                 <img style={{
                     filter: 'invert(100%)',
                     cursor: 'pointer'
@@ -39,4 +39,4 @@ const SuccessAlert = () => {
     );
 };
 
-export default SuccessAlert;
+export default ErrorAlert;

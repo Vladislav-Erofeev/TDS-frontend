@@ -9,6 +9,8 @@ import styles from './styles/mapObjectsComponents.module.css'
 import {CircularProgress} from "@mui/material";
 import {hasRole} from "../data/functions";
 import {useSearchParams} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setSuccessAction} from "../redux/messageReducer";
 
 const nullObject = {
     code: {
@@ -27,6 +29,7 @@ const MapObjectsComponent = ({map}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [selectedObject, setSelectedObject] = useState(nullObject)
     const [searchParams, setSearchParams] = useSearchParams()
+    const dispatch = useDispatch()
     const fetchObject = (id) => {
         let fetch = async () => {
             setSelectedObject(await GeodataService.getById(id))
@@ -34,6 +37,8 @@ const MapObjectsComponent = ({map}) => {
         }
         setIsLoading(true)
         let feture = geoLayer.getSource().getFeatureById(id)
+        if (feture === null)
+            setSearchParams({})
         map.getView().fit(feture.getGeometry(), {
             duration: 500,
             padding: [0, 50, 0, 500]
@@ -103,17 +108,19 @@ const MapObjectsComponent = ({map}) => {
         let push = async () => {
             await GeodataService.deleteById(id)
         }
-        geoLayer.current.getSource().removeFeature(geoLayer.current.getSource().getFeatureById(id))
+        geoLayer.getSource().removeFeature(geoLayer.getSource().getFeatureById(id))
         setSelectedObject(nullObject)
         setOpen(false)
+        setSearchParams({})
+        dispatch(setSuccessAction('Успех! Объект успешно удалён'))
         push()
     }
 
     const checkObject = () => {
         let push = async () => {
             await GeodataService.setCheckedById(selectedObject.id)
+            dispatch(setSuccessAction('Успех! Объект успешно заверен'))
         }
-
         push()
         setSelectedObject({...selectedObject, checked: true})
     }

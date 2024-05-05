@@ -10,6 +10,8 @@ import VectorLayer from "ol/layer/Vector";
 import {Fill, Stroke, Style} from "ol/style";
 import Draw from 'ol/interaction/Draw.js'
 import {GeoJSON} from "ol/format";
+import {useDispatch} from "react-redux";
+import {setErrorAction, setSuccessAction} from "../redux/messageReducer";
 
 const nullObjects = {
     code: null,
@@ -26,6 +28,7 @@ const ObjectInfoComponent = ({map}) => {
     const drawRef = useRef()
     const [errors, setErrors] = useState({})
     const [isPushing, setIsPushing] = useState(false)
+    const dispatch = useDispatch()
 
     const setLayer = (item) => {
         const fetch = async () => {
@@ -51,6 +54,15 @@ const ObjectInfoComponent = ({map}) => {
     const save = () => {
         let push = async () => {
             let hasErrors = false
+            if (object.code === null) {
+                dispatch(setErrorAction('Ошибка! Вы не выбрали код'))
+                setIsPushing(false)
+                return
+            } else if (object.feature === null) {
+                dispatch(setErrorAction('Ошибка! Геометрия не может быть пустой'))
+                setIsPushing(false)
+                return
+            }
             selectedLayer.attributes.forEach((attribute) => {
                 if (attribute.dataType === 'STRING')
                     return
@@ -85,6 +97,9 @@ const ObjectInfoComponent = ({map}) => {
                 await GeodataService.save(object)
                 setObject(nullObjects)
                 setSelectedLayer(null)
+                dispatch(setSuccessAction('Успех! Объект успешно сохранён'))
+            } else {
+                dispatch(setErrorAction('Ошибка! Неверные данные'))
             }
             setIsPushing(false)
         }
@@ -112,7 +127,7 @@ const ObjectInfoComponent = ({map}) => {
             drawRef.current = null
             let writer = new GeoJSON()
             let feature = writer.writeFeature(e.feature, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'})
-            setObject({...object, feature: JSON.parse(feature)})
+            setObject(object => ({...object, feature: JSON.parse(feature)}))
         })
         map.addInteraction(draw)
         drawRef.current = draw

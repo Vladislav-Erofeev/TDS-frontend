@@ -13,6 +13,7 @@ import {setLoadingAction} from "./redux/LoadReducer";
 import IndexPage from "./pages/IndexPage";
 import SuccessAlert from "./ui/SuccessAlert";
 import ObjectsPage from "./pages/ObjectsPage";
+import ErrorAlert from "./ui/ErrorAlert";
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
                 <Route path={'/login'} element={<LoginPage/>}/>
             </Routes>
             <SuccessAlert/>
+            <ErrorAlert />
         </>
     );
 }
