@@ -56,7 +56,7 @@ const IndexPage = () => {
                 height: '2px'
             }} />
             <p className={styles.title_descr}>Добавляйте свои геоданные в понятной и удобной для обработки структуре</p>
-            <img src={'/images/image5.png'} className={styles.image}/>
+            <img src={'/images/example.png'} className={styles.image} width={'80%'}/>
             <footer className={styles.footer}>
                 <p>© TDS 2024. Все права защищены</p>
                 <p>+7 (999) 999-99-99</p>
