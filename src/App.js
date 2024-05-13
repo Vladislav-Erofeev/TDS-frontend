@@ -15,6 +15,7 @@ import SuccessAlert from "./ui/SuccessAlert";
 import ObjectsPage from "./pages/ObjectsPage";
 import ErrorAlert from "./ui/ErrorAlert";
 import UncheckedPage from "./pages/UncheckedPage";
+import RegisterPage from "./pages/RegisterPage";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                     <Route path={'unchecked'} element={<UncheckedPage />}/>
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
+                <Route path={'/register'} element={<RegisterPage />}/>
             </Routes>
             <SuccessAlert/>
             <ErrorAlert />

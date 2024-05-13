@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    width: 80%;
+    width: 85%;
     justify-content: space-between;
     margin: 20px auto;
     align-items: center;
@@ -38,4 +38,11 @@
     background-color: #1c8feb;
     border: none;
     text-decoration: none;
+}
+
+.enter_btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }

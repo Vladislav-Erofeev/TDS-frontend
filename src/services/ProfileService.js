@@ -11,4 +11,8 @@ export class ProfileService {
         })
         return res.data
     }
+
+    static async register(user) {
+        await axios.post(`${process.env.REACT_APP_AUTH_URL}/register`, user)
+    }
 }

@@ -15,7 +15,7 @@ const ObjectsPage = () => {
             setObjects(await GeodataService.getAllUserObjects())
             setIsLoading(false)
         }
-        if (!hasRole('ADMIN', 'USER'))
+        if (!hasRole('ADMIN', 'USER', 'MODERATOR'))
             navigate('/login')
         setIsLoading(true)
         fetch()

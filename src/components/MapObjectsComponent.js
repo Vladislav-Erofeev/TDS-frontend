@@ -8,7 +8,7 @@ import {Select} from "ol/interaction";
 import styles from './styles/mapObjectsComponents.module.css'
 import {CircularProgress} from "@mui/material";
 import {hasRole} from "../data/functions";
-import {useSearchParams} from "react-router-dom";
+import {NavLink, useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {setSuccessAction} from "../redux/messageReducer";
 
@@ -157,14 +157,17 @@ const MapObjectsComponent = ({map}) => {
                         </div>)
                     }
                 </div>
-                {hasRole('ADMIN') && !selectedObject.checked ?
+                {hasRole('ADMIN', 'MODERATOR') && !selectedObject.checked ?
                     <button className={styles.verify} onClick={() => {
                         checkObject()
                     }}>Заверить</button> : null}
                 {
-                    hasRole('ADMIN', 'USER') ? <button className={styles.delete} onClick={() => {
+                    hasRole('ADMIN', 'USER', 'MODERATOR') ? <button className={styles.delete} onClick={() => {
                         remove(selectedObject.id)
-                    }}>Удалить</button> : null}
+                    }}>Удалить</button> : <div className={styles.non_auth_btn}>
+                        <NavLink className={styles.login_btn} to={'/login'}>Войти</NavLink>
+                        <NavLink className={styles.register_btn} to={'/register'}>Зарегистрироваться</NavLink>
+                    </div> }
             </div>}
         </div>
     );

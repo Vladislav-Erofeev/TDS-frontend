@@ -57,3 +57,24 @@
     background-color: #de4141;
     color: white;
 }
+
+.non_auth_btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.non_auth_btn a{
+    text-decoration: none;
+}
+
+.login_btn {
+    background-color: #1b8ae5;
+    padding: 10px 20px;
+    color: white;
+}
+
+.register_btn {
+    color: #1b8ae5;
+}
