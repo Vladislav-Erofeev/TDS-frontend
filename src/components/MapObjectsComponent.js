@@ -22,8 +22,7 @@ const nullObject = {
     checked: false,
     properties: {}
 }
-const MapObjectsComponent = ({map}) => {
-    const [geoLayer, setGeoLayer] = useState()
+const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
     const selectRef = useRef()
     const [open, setOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)

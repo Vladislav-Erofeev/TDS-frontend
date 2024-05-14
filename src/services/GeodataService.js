@@ -4,11 +4,12 @@ import {TokenService} from "./TokenService";
 export class GeodataService {
     static async save(object) {
         let token = await TokenService.getAccessToken()
-        await axios.post(`${process.env.REACT_APP_GEODATA_URL}/objects`, object, {
+        let res = await axios.post(`${process.env.REACT_APP_GEODATA_URL}/objects`, object, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
+        return res.data
     }
 
     static async getAll() {

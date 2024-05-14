@@ -18,7 +18,7 @@ const nullObjects = {
     feature: null,
     properties: {}
 }
-const ObjectInfoComponent = ({map}) => {
+const ObjectInfoComponent = ({map, geoLayer}) => {
     const [expanded, setExpanded] = useState(false)
     const [selectedLayer, setSelectedLayer] = useState(null)
     const [object, setObject] = useState(nullObjects)
@@ -94,7 +94,11 @@ const ObjectInfoComponent = ({map}) => {
                 }
             })
             if (!hasErrors) {
-                await GeodataService.save(object)
+                let res = await GeodataService.save(object)
+                let writer = new GeoJSON()
+                let f = writer.readFeature(res, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'})
+                f.setId(res.properties.id)
+                geoLayer.getSource().addFeature(f)
                 setObject(nullObjects)
                 setSelectedLayer(null)
                 dispatch(setSuccessAction('Успех! Объект успешно сохранён'))

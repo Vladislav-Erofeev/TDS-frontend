@@ -8,13 +8,14 @@ import {useSelector} from "react-redux";
 
 const MapPage = () => {
     const [map, setMap] = useState(null)
+    const [geoLayer, setGeoLayer] = useState(null)
     const user = useSelector(state => state.user)
     return (
         <>
             <MapComponent setMap={setMap}/>
-            <MapObjectsComponent map={map}/>
+            <MapObjectsComponent map={map} geoLayer={geoLayer} setGeoLayer={setGeoLayer}/>
             <SearchComponent map={map}/>
-            {hasRole('USER', 'ADMIN') ? <ObjectInfoComponent map={map}/> : null}
+            {hasRole('USER', 'ADMIN') ? <ObjectInfoComponent geoLayer={geoLayer} map={map}/> : null}
         </>
     );
 };
