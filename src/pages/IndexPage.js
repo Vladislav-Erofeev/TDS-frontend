@@ -12,7 +12,7 @@ const IndexPage = () => {
                     <p>Получите доступ ко всему миру в своём компьютере</p>
                     <NavLink to={'/map'}>Начать работу</NavLink>
                 </div>
-                <img src={'/images/image1.png'}/>
+                <img src={'/images/image58.png'} width={'500px'}/>
             </div>
 
             <h1 className={styles.head_title}>Наши возможности</h1>
@@ -37,13 +37,13 @@ const IndexPage = () => {
                         <p>Описание</p>
                     </div>
                 </div>
-                <div className={styles.card_main}>
-                    <img src={'/images/image3.png'} width={'350px'}/>
-                    <div className={styles.card_description}>
-                        <h2>Тайловое покрытие</h2>
-                        <p>Описание</p>
-                    </div>
-                </div>
+                {/*<div className={styles.card_main}>*/}
+                {/*    <img src={'/images/image3.png'} width={'350px'}/>*/}
+                {/*    <div className={styles.card_description}>*/}
+                {/*        <h2>Тайловое покрытие</h2>*/}
+                {/*        <p>Описание</p>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
             <h1 style={{

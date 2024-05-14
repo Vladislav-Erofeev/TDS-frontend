@@ -6,6 +6,7 @@ import {store} from "../redux/store";
 import {TokenService} from "../services/TokenService";
 import {stringAvatar} from "../data/functions";
 import styles from './styles/profilePage.module.css'
+import ProfileLineChart from "../ui/ProfileLineChart";
 
 const ProfilePage = () => {
     const user = useSelector(state => state.user)
@@ -59,6 +60,11 @@ const ProfilePage = () => {
                             </div>
                         </div>
                     </div>
+
+                    <h1 style={{
+                        textAlign: 'center',
+                    }}>Активность пользователя</h1>
+                    <ProfileLineChart />
 
                 </div>
             }

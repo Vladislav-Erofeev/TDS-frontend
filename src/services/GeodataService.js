@@ -65,4 +65,14 @@ export class GeodataService {
         })
         return res.data
     }
+
+    static async getItemsCountByPersonIdGroupBuDay() {
+        let token = await TokenService.getAccessToken()
+        let res = await axios.get(`${process.env.REACT_APP_GEODATA_URL}/metrics/items`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return res.data
+    }
 }
