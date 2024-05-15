@@ -1,5 +1,13 @@
 const SET_USER = 'SET_USER'
-export const UserReducer = (state = null, action) => {
+
+const nullUser = {
+    name: '',
+    surname: '',
+    lastname: '',
+    phone: '',
+    email: '',
+}
+export const UserReducer = (state = nullUser, action) => {
     switch (action.type) {
         case SET_USER:
             return action.payload
