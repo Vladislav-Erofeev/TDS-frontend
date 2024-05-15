@@ -10,6 +10,7 @@ import {platformModifierKeyOnly} from "ol/events/condition";
 const MapComponent = ({setMap}) => {
     const mapDiv = useRef()
     const mapRef = useRef()
+    const [rotation, setRotation] = useState(0)
 
     const zoomInRef = useRef()
     const zoomOutRef = useRef()
@@ -53,6 +54,10 @@ const MapComponent = ({setMap}) => {
             })
         })
 
+        mapElem.getView().on("change:rotation", (e) => {
+            setRotation(e.target.getRotation())
+        })
+
         zoomOutRef.current.addEventListener('click', () => {
             mapElem.getView().animate({
                 zoom: mapElem.getView().getZoom() - 1,
@@ -64,11 +69,21 @@ const MapComponent = ({setMap}) => {
         mapRef.current = mapElem
         setMap(mapElem)
     }, [])
+
+    const compassClick = () => {
+        mapRef.current.getView().animate({
+            rotation: 0,
+            duration: 300
+        })
+    }
     return (
         <div ref={mapDiv} className={styles.map}>
             <div className={styles.map_controls}>
                 <button ref={zoomInRef}>+</button>
                 <button ref={zoomOutRef}>-</button>
+                <button onClick={compassClick}><img style={{
+                    rotate: `${rotation}rad`
+                }} src={'/icons/compass1.png'} width={'30px'}/></button>
             </div>
         </div>
     );
