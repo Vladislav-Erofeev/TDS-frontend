@@ -1,4 +1,5 @@
 import {store} from "../redux/store";
+import moment from "moment/moment";
 
 export function hasRole(...role) {
     let user = store.getState().user
@@ -43,5 +44,9 @@ export function stringAvatar(name) {
         },
         children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
     };
+}
+
+export function isDateCorrect(date) {
+    return date.match('[0-9]{2}.[0-9]{2}.[0-9]{4}') && moment(date, 'DD.MM.YYYY').isValid()
 }
 

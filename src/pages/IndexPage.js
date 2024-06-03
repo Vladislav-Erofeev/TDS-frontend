@@ -27,14 +27,14 @@ const IndexPage = () => {
                     <img src={'/images/image2.png'} width={'350px'}/>
                     <div className={styles.card_description}>
                         <h2>Базовая карта</h2>
-                        <p>Описание</p>
+                        <p>Вам доступен просмотр базовой карты</p>
                     </div>
                 </div>
                 <div className={styles.card_main}>
                     <img src={'/images/image4.png'} width={'350px'}/>
                     <div className={styles.card_description}>
                         <h2>Геопространственный поиск</h2>
-                        <p>Описание</p>
+                        <p>Вы можете пользоваться геокодированными поиском объектов по адресу</p>
                     </div>
                 </div>
                 {/*<div className={styles.card_main}>*/}

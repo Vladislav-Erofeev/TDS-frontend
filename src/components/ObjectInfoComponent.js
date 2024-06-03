@@ -16,6 +16,11 @@ import {setErrorAction, setSuccessAction} from "../redux/messageReducer";
 const nullObjects = {
     code: null,
     feature: null,
+    name: '',
+    addrCountry: '',
+    addrCity: '',
+    addrStreet: '',
+    addrHousenumber: '',
     properties: {}
 }
 const ObjectInfoComponent = ({map, geoLayer}) => {
@@ -64,6 +69,8 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                 return
             }
             selectedLayer.attributes.forEach((attribute) => {
+                if (!object.properties[attribute.name])
+                    return;
                 if (attribute.dataType === 'STRING')
                     return
                 let value;
@@ -81,7 +88,7 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                     hasErrors = true
                     setErrors(errors => {
                         let err = {...errors}
-                        err[attribute.name] = 'Неправильный тип данных'
+                        err[attribute.name] = `Неверный тип данных. Тип данных должен быть: ${attribute.dataType}`
                         return err
                     })
                 } else {
@@ -215,6 +222,26 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                     {isLoading ? <CircularProgress sx={{
                         margin: '20px auto'
                     }}/> : <div className={styles.attributes}>
+                        <TextField fullWidth label={'Имя'} value={object.name}
+                                   onChange={(e) => {
+                                       setObject({...object, name: e.target.value})
+                                   }}/>
+                        <TextField fullWidth label={'Страна'} value={object.addrCountry}
+                                   onChange={(e) => {
+                                       setObject({...object, addrCountry: e.target.value})
+                                   }}/>
+                        <TextField fullWidth label={'Город'} value={object.addrCity}
+                                   onChange={(e) => {
+                                       setObject({...object, addrCity: e.target.value})
+                                   }}/>
+                        <TextField fullWidth label={'Улица'} value={object.addrStreet}
+                                   onChange={(e) => {
+                                       setObject({...object, addrStreet: e.target.value})
+                                   }}/>
+                        <TextField fullWidth label={'Номер дома'} value={object.addrHousenumber}
+                                   onChange={(e) => {
+                                       setObject({...object, addrHousenumber: e.target.value})
+                                   }}/>
                         {selectedLayer.attributes.map(attribute => attribute.dataType === 'BOOLEAN' ?
                             <FormControlLabel control={<Checkbox onChange={(e) => {
                                 handleChange(attribute.name, e.target.checked)
@@ -224,6 +251,9 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                                        key={attribute.id}
                                        value={object[attribute.name]}
                                        onChange={(e) => {
+                                           let rep = {...errors}
+                                           rep[attribute.name] = null
+                                           setErrors(rep)
                                            handleChange(attribute.name, e.target.value)
                                        }}
                                        label={attribute.name}
@@ -231,7 +261,6 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                                            ? errors[attribute.name] : attribute.description}/>)
                         }
                     </div>}
-
                     {isPushing ? <CircularProgress sx={{
                             margin: 'auto'
                         }}/> :

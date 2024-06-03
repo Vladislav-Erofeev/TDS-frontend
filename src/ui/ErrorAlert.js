@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Alert, Collapse} from "@mui/material";
+import {setErrorAction} from "../redux/messageReducer";
 
 const ErrorAlert = () => {
     const [show, setShow] = useState(false)
     const message = useSelector(state => state.messages.error)
+    const dispatch = useDispatch()
     useEffect(() => {
         if (message !== null) {
             setShow(true)
             setTimeout(() => {
                 setShow(false)
+                setTimeout(() => {
+                    dispatch(setErrorAction(null))
+                }, 200)
             }, 2000)
         }
     }, [message])

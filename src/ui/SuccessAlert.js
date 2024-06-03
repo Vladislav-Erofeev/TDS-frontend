@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Collapse} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setSuccessAction} from "../redux/messageReducer";
 
 const SuccessAlert = () => {
     const [show, setShow] = useState(false)
     const message = useSelector(state => state.messages.success)
+    const dispatch = useDispatch()
     useEffect(() => {
         if (message !== null) {
             setShow(true)
             setTimeout(() => {
                 setShow(false)
+                setTimeout(() => {
+                    dispatch(setSuccessAction(null))
+                }, 200)
             }, 2000)
         }
     }, [message])

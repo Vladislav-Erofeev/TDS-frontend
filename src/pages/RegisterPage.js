@@ -4,6 +4,10 @@ import styles from './styles/registerPage.module.css'
 import {CircularProgress, TextField} from "@mui/material";
 import {ProfileService} from "../services/ProfileService";
 import {useNavigate} from "react-router";
+import {isDateCorrect} from "../data/functions";
+import {useDispatch} from "react-redux";
+import {setErrorAction} from "../redux/messageReducer";
+import axios from "axios";
 
 
 const nullUser = {
@@ -19,12 +23,14 @@ const nullUser = {
 const RegisterPage = () => {
     const [user, setUser] = useState(nullUser)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [errors, setErrors] = useState({
         password: '',
         phone: '',
         name: '',
         surname: '',
-        email: ''
+        email: '',
+        birthDate: ''
     })
     const [isLoading, setIsLoading] = useState(false)
     const register = () => {
@@ -34,7 +40,17 @@ const RegisterPage = () => {
                 await ProfileService.register(user)
                 navigate('/login')
             } catch (e) {
-                setErrors({...errors, email: 'Пользователь с таким email уже существует'})
+                switch (e.code) {
+                    case axios.AxiosError.ERR_BAD_REQUEST:
+                        setErrors({...errors, email: 'Пользователь с таким email уже существует'})
+                        break
+                    case axios.AxiosError.ERR_NETWORK:
+                        dispatch(setErrorAction("Упс! Сетевая ошибка"))
+                        break
+                    default:
+                        dispatch(setErrorAction("Упс! Произошла ошибка не сервере"))
+                        break
+                }
             }
             setIsLoading(false)
         }
@@ -75,6 +91,13 @@ const RegisterPage = () => {
         } else {
             report.surname = ''
         }
+
+        if (user.birthDate !== '' && !isDateCorrect(user.birthDate)) {
+            hasErrors = true
+            report.birthDate = "Неверный формат даты"
+        } else {
+            report.birthDate = ""
+        }
         setErrors(report)
 
         return !hasErrors
@@ -89,6 +112,7 @@ const RegisterPage = () => {
                                helperText={errors.name}
                                error={errors.name !== ''}
                                onChange={(e) => {
+                                   setErrors({...errors, name: ''})
                                    setUser({...user, name: e.target.value})
                                }}
                                fullWidth
@@ -99,6 +123,7 @@ const RegisterPage = () => {
                         helperText={errors.surname}
                         error={errors.surname !== ''}
                         onChange={(e) => {
+                            setErrors({...errors, surname: ''})
                             setUser({...user, surname: e.target.value})
                         }}
                         fullWidth
@@ -113,7 +138,10 @@ const RegisterPage = () => {
                                    setUser({...user, addr: e.target.value})
                                }} fullWidth label={'Адрес'}/>
                     <TextField value={user.birthDate}
+                               helperText={errors.birthDate}
+                               error={errors.birthDate !== ''}
                                onChange={(e) => {
+                                   setErrors({...errors, birthDate: ''})
                                    setUser({...user, birthDate: e.target.value})
                                }} fullWidth placeholder={'дд.мм.гггг'} label={'Дата рождения'}/>
                     <TextField value={user.email}
@@ -121,6 +149,7 @@ const RegisterPage = () => {
                                error={errors.email !== ''}
                                required
                                onChange={(e) => {
+                                   setErrors({...errors, email: ''})
                                    setUser({...user, email: e.target.value})
                                }} fullWidth label={'Почта'}/>
                     <TextField value={user.phone}
@@ -135,6 +164,7 @@ const RegisterPage = () => {
                                helperText={errors.password}
                                error={errors.password !== ''}
                                onChange={(e) => {
+                                   setErrors({...errors, password: ''})
                                    setUser({...user, password: e.target.value})
                                }} fullWidth label={'Пароль'}/>
                 </div>

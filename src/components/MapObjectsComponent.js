@@ -148,6 +148,15 @@ const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
                     color: '#e33737'
                 }}>{selectedObject.checked ? 'Объект проверен' : "Объект ещё не проверен"}</h3>
                 <div className={styles.props_list}>
+                    <div className={styles.properties}>
+                        <p>Имя: </p>
+                        <p>{selectedObject.name}</p>
+                    </div>
+                    <div className={styles.properties}>
+                        <p>Адрес: </p>
+                        <p>{selectedObject.addrCountry}, {selectedObject.addrCity} {selectedObject.addrStreet ? `, ${selectedObject.addrStreet}` :  '' }
+                            {selectedObject.addrHousenumber ? `, ${selectedObject.addrHousenumber}` : ''}</p>
+                    </div>
                     {
                         Object.keys(selectedObject.properties).map(key => <div key={key}
                                                                                className={styles.properties}>
@@ -166,7 +175,7 @@ const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
                     }}>Удалить</button> : <div className={styles.non_auth_btn}>
                         <NavLink className={styles.login_btn} to={'/login'}>Войти</NavLink>
                         <NavLink className={styles.register_btn} to={'/register'}>Зарегистрироваться</NavLink>
-                    </div> }
+                    </div>}
             </div>}
         </div>
     );
