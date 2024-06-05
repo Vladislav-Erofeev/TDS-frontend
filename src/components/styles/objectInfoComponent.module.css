@@ -1,10 +1,9 @@
 .main {
     position: absolute;
     top: 80px;
-    width: 450px;
-    height: calc(100% - 100px);
+    bottom: 0;
+    width: 470px;
     background-color: white;
-    padding: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -29,10 +28,14 @@
 }
 
 .object_data {
-    width: 90%;
     display: flex;
+    width: calc(100% - 40px);
+    height: 100%;
     flex-direction: column;
     gap: 20px;
+    overflow-y: auto;
+    padding: 0 20px;
+    padding-bottom: 40px;
 }
 
 .back_btn {
