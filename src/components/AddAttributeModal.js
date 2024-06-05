@@ -50,7 +50,9 @@ const AddAttributeModal = ({open, setOpen, callback}) => {
                         <option value={"DOUBLE"} key={"DOUBLE"}>DOUBLE</option>
                         <option value={"STRING"} key={"STRING"}>STRING</option>
                     </TextField>
-                    <FormControlLabel control={<Checkbox onChange={(e) => {
+                    <FormControlLabel control={<Checkbox value={newAttribute.required}
+                                                         checked={newAttribute.required}
+                                                         onChange={(e) => {
                         setNewAttribute({...newAttribute, required: e.target.checked})
                     }}/>} label={'Обязательно'}/>
                     <TextField value={newAttribute.description} onChange={(e) => {

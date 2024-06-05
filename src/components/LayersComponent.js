@@ -35,18 +35,21 @@ const LayersComponent = () => {
     return (
         <div>
             <div className={styles.list}>
-                {
+                { layers.length === 0 ? <h2 style={{textAlign: 'center'}}>Список пуст</h2> :
                     layers.map(item => <NavLink to={`layers/${item.id}`} key={item.id}
                                                 className={styles.layer}>
                         <p>{item.name} - {item.hname}</p>
                         <p>{item.creationDate}</p>
                         <div>
-                            <button onClick={(e) => {
-                                e.preventDefault()
-                                deleteLayer(item.id)
-                            }}>
-                                <img src={'/icons/remove.svg'} width={'20px'}/>
-                            </button>
+                            {hasRole('ADMIN') ?
+                                <button onClick={(e) => {
+                                    e.preventDefault()
+                                    deleteLayer(item.id)
+                                }}>
+                                    <img src={'/icons/remove.svg'} width={'20px'}/>
+                                </button>
+                                :null}
+
                         </div>
                     </NavLink>)
                 }

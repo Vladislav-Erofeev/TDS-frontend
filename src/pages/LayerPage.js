@@ -154,15 +154,20 @@ const LayerPage = () => {
                     <div>
                         <h1>Атрибуты слоя</h1>
                         <div className={styles.codes_list}>
-                            {layer.attributes.map(item => <div key={item.id} className={styles.attribute_item}>
+                            {layer.attributes.length === 0 ? <h2 style={{textAlign: 'center'}}>Список пуст</h2> :
+                                layer.attributes.map(item => <div key={item.id} className={styles.attribute_item}>
                                 <p>{item.name} - {item.hname} {item.required ? '*' : null}</p>
                                 <p>{item.dataType}</p>
                                 <p>{item.creationDate}</p>
-                                <button className={styles.remove_btn} onClick={() => {
-                                    removeAttribute(item)
-                                }}>
-                                    <img src={'/icons/remove.svg'} width={'20px'}/>
-                                </button>
+                                    {
+                                        hasRole('ADMIN') ?
+                                            <button className={styles.remove_btn} onClick={() => {
+                                                removeAttribute(item)
+                                            }}>
+                                                <img src={'/icons/remove.svg'} width={'20px'}/>
+                                            </button>
+                                            : null
+                                    }
                             </div>)}
                         </div>
                         {hasRole("ADMIN") ? <button className={styles.add_code} onClick={() => {

@@ -4,8 +4,10 @@ import AddAttributeModal from "./AddAttributeModal";
 import {AttributeService} from "../services/AttributeService";
 import {hasRole} from "../data/functions";
 import {Popover} from "@mui/material";
+import {useSelector} from "react-redux";
 
 const AttributesTabComponent = () => {
+    const user = useSelector(state => state.user)
     const [openAddAttribute, setOpenAddAttribute] = useState(false)
     const [attributes, setAttributes] = useState([])
 
@@ -34,15 +36,17 @@ const AttributesTabComponent = () => {
     return (
         <div>
             <div className={styles.attributes_list}>
-                {attributes.map(attribute => <div key={attribute.id} className={styles.attribute}>
+                {attributes.length === 0 ? <h2 style={{textAlign: 'center'}}>Список пуст</h2> : attributes.map(attribute => <div key={attribute.id} className={styles.attribute}>
                     <p>{attribute.name} - {attribute.hname} {attribute.required ? '*' : null}</p>
                     <p>{attribute.dataType}</p>
                     <p>{attribute.creationDate}</p>
-                    <button className={styles.remove_btn} onClick={() => {
-                        removeAttribute(attribute)
-                    }}>
-                        <img src={'/icons/remove.svg'} width={'20px'}/>
-                    </button>
+                    {hasRole('ADMIN') ?
+                        <button className={styles.remove_btn} onClick={() => {
+                            removeAttribute(attribute)
+                        }}>
+                            <img src={'/icons/remove.svg'} width={'20px'}/>
+                        </button>
+                    : null}
                 </div>)}
             </div>
             {hasRole("ADMIN") ? <button className={styles.add_layer} onClick={() => {
