@@ -155,7 +155,7 @@ const LayerPage = () => {
                         <h1>Атрибуты слоя</h1>
                         <div className={styles.codes_list}>
                             {layer.attributes.map(item => <div key={item.id} className={styles.attribute_item}>
-                                <p>{item.name} - {item.hname}</p>
+                                <p>{item.name} - {item.hname} {item.required ? '*' : null}</p>
                                 <p>{item.dataType}</p>
                                 <p>{item.creationDate}</p>
                                 <button className={styles.remove_btn} onClick={() => {

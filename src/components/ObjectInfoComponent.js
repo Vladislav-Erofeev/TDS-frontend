@@ -69,7 +69,17 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                 return
             }
             selectedLayer.attributes.forEach((attribute) => {
-                if (!object.properties[attribute.name])
+                if (!object.properties[attribute.name]) {
+                    if (attribute.required) {
+                        hasErrors = true
+                        setErrors(errors => {
+                            let err = {...errors}
+                            err[attribute.name] = 'Поле не может быть пустым'
+                            return err
+                        })
+                    }
+                    return;
+                }
                     return;
                 if (attribute.dataType === 'STRING')
                     return
@@ -247,6 +257,7 @@ const ObjectInfoComponent = ({map, geoLayer}) => {
                                 handleChange(attribute.name, e.target.checked)
                             }}/>} label={attribute.name}/> :
                             <TextField fullWidth
+                                       required={attribute.required}
                                        error={errors[attribute.name] !== null && errors[attribute.name] !== undefined}
                                        key={attribute.id}
                                        value={object[attribute.name]}

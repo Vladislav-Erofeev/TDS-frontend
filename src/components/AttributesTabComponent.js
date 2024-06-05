@@ -3,6 +3,7 @@ import styles from './styles/attributesTabComponent.module.css'
 import AddAttributeModal from "./AddAttributeModal";
 import {AttributeService} from "../services/AttributeService";
 import {hasRole} from "../data/functions";
+import {Popover} from "@mui/material";
 
 const AttributesTabComponent = () => {
     const [openAddAttribute, setOpenAddAttribute] = useState(false)
@@ -34,7 +35,7 @@ const AttributesTabComponent = () => {
         <div>
             <div className={styles.attributes_list}>
                 {attributes.map(attribute => <div key={attribute.id} className={styles.attribute}>
-                    <p>{attribute.name} - {attribute.hname}</p>
+                    <p>{attribute.name} - {attribute.hname} {attribute.required ? '*' : null}</p>
                     <p>{attribute.dataType}</p>
                     <p>{attribute.creationDate}</p>
                     <button className={styles.remove_btn} onClick={() => {

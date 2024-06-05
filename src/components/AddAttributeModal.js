@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Backdrop, CircularProgress, TextField} from "@mui/material";
+import {Backdrop, Checkbox, CircularProgress, FormControlLabel, TextField} from "@mui/material";
 import styles from "./styles/addLayerModal.module.css";
 import {AttributeService} from "../services/AttributeService";
 
@@ -7,7 +7,8 @@ const nullAttribute = {
     name: '',
     hname: '',
     dataType: 'INTEGER',
-    description: ''
+    description: '',
+    required: false
 }
 const AddAttributeModal = ({open, setOpen, callback}) => {
     const [newAttribute, setNewAttribute] = useState(nullAttribute)
@@ -49,6 +50,9 @@ const AddAttributeModal = ({open, setOpen, callback}) => {
                         <option value={"DOUBLE"} key={"DOUBLE"}>DOUBLE</option>
                         <option value={"STRING"} key={"STRING"}>STRING</option>
                     </TextField>
+                    <FormControlLabel control={<Checkbox onChange={(e) => {
+                        setNewAttribute({...newAttribute, required: e.target.checked})
+                    }}/>} label={'Обязательно'}/>
                     <TextField value={newAttribute.description} onChange={(e) => {
                         setNewAttribute({...newAttribute, description: e.target.value})
                     }} placeholder={"Описание"} multiline rows={4}/>
