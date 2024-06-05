@@ -4,7 +4,7 @@ import {Avatar, CircularProgress, TextField} from "@mui/material";
 import {useNavigate} from "react-router";
 import {store} from "../redux/store";
 import {TokenService} from "../services/TokenService";
-import {stringAvatar} from "../data/functions";
+import {isDateCorrect, stringAvatar} from "../data/functions";
 import styles from './styles/profilePage.module.css'
 import ProfileLineChart from "../ui/ProfileLineChart";
 import {setUserAction} from "../redux/userReducer";
@@ -17,7 +17,8 @@ const ProfilePage = () => {
     const [errors, setErrors] = useState({
         name: '',
         surname: '',
-        phone: ''
+        phone: '',
+        birthDate: ''
     })
     const [editMode, setEditMode] = useState(false)
     const [newUser, setNewUser] = useState()
@@ -55,6 +56,13 @@ const ProfilePage = () => {
             report.name = 'Поле не может быть пустым'
         } else {
             report.name = ''
+        }
+
+        if (user.birthDate !== '' && !isDateCorrect(user.birthDate)) {
+            isCorrect = false
+            report.birthDate = "Неверный формат даты. Дата должна быть в формате: дд.мм.гггг"
+        } else {
+            report.birthDate = ""
         }
 
         setErrors(report)
@@ -149,6 +157,8 @@ const ProfilePage = () => {
                                 <div>
                                     <p>Дата рождения: </p>
                                     {editMode ? <TextField
+                                            error={errors.birthDate !== ''}
+                                            helperText={errors.birthDate}
                                             value={newUser.birthDate}
                                             onChange={(e) => {
                                                 setNewUser({...newUser, birthDate: e.target.value})

@@ -47,6 +47,14 @@ export function stringAvatar(name) {
 }
 
 export function isDateCorrect(date) {
-    return date.match('[0-9]{2}.[0-9]{2}.[0-9]{4}') && moment(date, 'DD.MM.YYYY').isValid()
+    return date.split('.').length === 3 && date.match('[0-9]{2}\.[0-9]{2}\.[0-9]{4}') && moment(date, 'DD.MM.YYYY').isValid()
 }
+
+export const isEmailCorrect = (email) => {
+    return String(email)
+        .toLowerCase()
+        .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+};
 

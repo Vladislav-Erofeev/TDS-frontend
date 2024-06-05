@@ -4,7 +4,7 @@ import styles from './styles/registerPage.module.css'
 import {CircularProgress, TextField} from "@mui/material";
 import {ProfileService} from "../services/ProfileService";
 import {useNavigate} from "react-router";
-import {isDateCorrect} from "../data/functions";
+import {isDateCorrect, isEmailCorrect} from "../data/functions";
 import {useDispatch} from "react-redux";
 import {setErrorAction} from "../redux/messageReducer";
 import axios from "axios";
@@ -70,11 +70,17 @@ const RegisterPage = () => {
         if (user.email === '') {
             report.email = 'Поле не может быть пустым'
             hasErrors = true
+        } else if (!isEmailCorrect(user.email)) {
+            report.email = 'Почта должна быть валидной'
+            hasErrors = true
         } else {
             report.email = ''
         }
         if (user.password === '') {
             report.password = 'Поле не может быть пустым'
+            hasErrors = true
+        } else if (user.password.length < 6) {
+            report.password = 'Длина пароля должна быть более 6 символов'
             hasErrors = true
         } else {
             report.password = ''
@@ -94,7 +100,7 @@ const RegisterPage = () => {
 
         if (user.birthDate !== '' && !isDateCorrect(user.birthDate)) {
             hasErrors = true
-            report.birthDate = "Неверный формат даты"
+            report.birthDate = "Неверный формат даты. Дата должна быть в формате: дд.мм.гггг"
         } else {
             report.birthDate = ""
         }
