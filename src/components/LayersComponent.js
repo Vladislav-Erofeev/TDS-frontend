@@ -4,15 +4,21 @@ import styles from './styles/layerComponent.module.css'
 import AddLayerModal from "./AddLayerModal";
 import {NavLink} from "react-router-dom";
 import {hasRole} from "../data/functions";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setErrorAction} from "../redux/messageReducer";
 
 const LayersComponent = () => {
     const user = useSelector(state => state.user)
     const [layers, setLayers] = useState([])
     const [openAddLayerModal, setOpenAddLayerModal] = useState(false)
+    const dispatch = useDispatch()
     useEffect(() => {
         let fetch = async () => {
-            setLayers(await LayerService.getAll())
+            try {
+                setLayers(await LayerService.getAll())
+            } catch (e) {
+                dispatch(setErrorAction('Ошибка! Сервис временно недоступен'))
+            }
         }
 
         fetch()

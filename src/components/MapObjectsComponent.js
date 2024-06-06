@@ -10,29 +10,47 @@ import {CircularProgress} from "@mui/material";
 import {hasRole} from "../data/functions";
 import {NavLink, useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setSuccessAction} from "../redux/messageReducer";
+import {setErrorAction, setSuccessAction} from "../redux/messageReducer";
+import {CodeService} from "../services/CodeService";
 
 const nullObject = {
-    code: {
-        id: '',
-        name: '',
-        code: '',
-    },
+    code: '',
     creationDate: '',
     checked: false,
     properties: {}
+}
+
+const nullCode = {
+    id: '',
+    code: '',
+    name: ''
 }
 const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
     const selectRef = useRef()
     const [open, setOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [selectedObject, setSelectedObject] = useState(nullObject)
+    const [objectCode, setObjectCode] = useState(nullCode)
     const [searchParams, setSearchParams] = useSearchParams()
+    const [isCodeLoading, setIsCodeLoading] = useState(false)
     const dispatch = useDispatch()
+
     const fetchObject = (id) => {
         let fetch = async () => {
-            setSelectedObject(await GeodataService.getById(id))
-            setIsLoading(false)
+            try {
+                let object = await GeodataService.getById(id)
+                setSelectedObject(object)
+                setIsLoading(false)
+                setIsCodeLoading(true)
+                try {
+                    setObjectCode(await CodeService.getById(object.code))
+                } catch (e) {
+                    setObjectCode({name: 'Сервис временно недоступен', code: ''})
+                }
+                setIsCodeLoading(false)
+            } catch (e) {
+                dispatch(setErrorAction("Ошибка! Сервис временно недоступен"))
+            }
         }
         setIsLoading(true)
         let feture = geoLayer.getSource().getFeatureById(id)
@@ -51,7 +69,12 @@ const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
         if (map == null)
             return
         let fetch = async () => {
-            let data = await GeodataService.getAll()
+            let data = []
+            try {
+                data = await GeodataService.getAll()
+            } catch (e) {
+                dispatch(setErrorAction("Ошибка! Сервис временно недоступен"))
+            }
             let source = new VectorSource()
             let writer = new GeoJSON()
             data.forEach((feature) => {
@@ -142,7 +165,9 @@ const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
             {isLoading ? <CircularProgress sx={{
                 marginTop: '20px'
             }}/> : <div className={styles.object_info}>
-                <h3>Код: {selectedObject.code.code} - {selectedObject.code.name}</h3>
+                <h3>Код: {isCodeLoading ? <CircularProgress sx={{
+                    marginLeft: '10px'
+                }} /> : `${objectCode.code} - ${objectCode.name}`}</h3>
                 <h3>Дата создания: {selectedObject.creationDate}</h3>
                 <h3 style={selectedObject.checked ? {color: '#2cbb2c'} : {
                     color: '#e33737'
@@ -154,7 +179,7 @@ const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
                     </div>
                     <div className={styles.properties}>
                         <p>Адрес: </p>
-                        <p>{selectedObject.addrCountry}, {selectedObject.addrCity} {selectedObject.addrStreet ? `, ${selectedObject.addrStreet}` :  '' }
+                        <p>{selectedObject.addrCountry}, {selectedObject.addrCity} {selectedObject.addrStreet ? `, ${selectedObject.addrStreet}` : ''}
                             {selectedObject.addrHousenumber ? `, ${selectedObject.addrHousenumber}` : ''}</p>
                     </div>
                     {

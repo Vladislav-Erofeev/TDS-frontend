@@ -1,12 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {LayerService} from "../services/LayerService";
 import styles from './styles/layerSelection.module.css'
+import {useDispatch} from "react-redux";
+import {setErrorAction} from "../redux/messageReducer";
 
 const LayerSelection = ({setSelected}) => {
     const [layers, setLayers] = useState([])
+    const dispatch = useDispatch()
     useEffect(() => {
         const fetch = async () => {
-            setLayers(await LayerService.getAll())
+            try {
+                setLayers(await LayerService.getAll())
+            } catch (e) {
+                dispatch(setErrorAction('Ошибка! Сервис временно недоступен'))
+            }
         }
         fetch()
     }, [])

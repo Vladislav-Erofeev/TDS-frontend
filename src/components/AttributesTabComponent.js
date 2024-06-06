@@ -4,16 +4,22 @@ import AddAttributeModal from "./AddAttributeModal";
 import {AttributeService} from "../services/AttributeService";
 import {hasRole} from "../data/functions";
 import {Popover} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setErrorAction} from "../redux/messageReducer";
 
 const AttributesTabComponent = () => {
     const user = useSelector(state => state.user)
     const [openAddAttribute, setOpenAddAttribute] = useState(false)
     const [attributes, setAttributes] = useState([])
+    const dispatch = useDispatch()
 
     useEffect(() => {
         let fetch = async () => {
-            setAttributes(await AttributeService.getAll())
+            try {
+                setAttributes(await AttributeService.getAll())
+            } catch (e) {
+                dispatch(setErrorAction('Ошибка! Сервис временно недоступен'))
+            }
         }
         fetch()
     }, [])

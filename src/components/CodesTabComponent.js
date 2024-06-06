@@ -4,15 +4,21 @@ import CodeComponent from "./CodeComponent";
 import styles from './styles/codeTabComponent.module.css'
 import AddCodeModal from "./AddCodeModal";
 import {hasRole} from "../data/functions";
+import {setErrorAction} from "../redux/messageReducer";
+import {useDispatch} from "react-redux";
 
 const CodesTabComponent = () => {
     const [list, setList] = useState([])
     const [openAddCodeModal, setOpenCodeModal] = useState(false)
+    const dispatch = useDispatch()
     useEffect(() => {
         const fetch = async () => {
-            setList(await CodeService.getAll())
+            try {
+                setList(await CodeService.getAll())
+            } catch (e) {
+                dispatch(setErrorAction('Ошибка! Сервис временно недоступен'))
+            }
         }
-
         fetch()
     }, [])
 

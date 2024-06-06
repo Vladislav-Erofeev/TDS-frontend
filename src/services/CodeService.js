@@ -14,4 +14,9 @@ export class CodeService {
         let res = await axios.get(`${process.env.REACT_APP_CLASSIFIER}/codes`)
         return res.data
     }
+
+    static async getById(codeId) {
+        let res = await axios.get(`${process.env.REACT_APP_CLASSIFIER}/codes/${codeId}`)
+        return res.data
+    }
 }
