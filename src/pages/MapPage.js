@@ -13,7 +13,9 @@ const MapPage = () => {
     return (
         <>
             <MapComponent setMap={setMap}/>
-            <MapObjectsComponent map={map} geoLayer={geoLayer} setGeoLayer={setGeoLayer}/>
+            <MapObjectsComponent map={map}
+                                 geoLayer={geoLayer}
+                                 setGeoLayer={setGeoLayer}/>
             <SearchComponent map={map}/>
             {hasRole('USER', 'ADMIN') ? <ObjectInfoComponent geoLayer={geoLayer} map={map}/> : null}
         </>

@@ -29,10 +29,10 @@ const MapObjectsComponent = ({map, geoLayer, setGeoLayer}) => {
     const selectRef = useRef()
     const [open, setOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [selectedObject, setSelectedObject] = useState(nullObject)
     const [objectCode, setObjectCode] = useState(nullCode)
     const [searchParams, setSearchParams] = useSearchParams()
     const [isCodeLoading, setIsCodeLoading] = useState(false)
+    const [selectedObject, setSelectedObject] = useState(nullObject)
     const dispatch = useDispatch()
 
     const fetchObject = (id) => {

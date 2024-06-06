@@ -2,10 +2,9 @@ import axios from "axios";
 
 export class SearchService {
     static async search(query) {
-        let res = await axios.get(`https://nominatim.openstreetmap.org/search`, {
+        let res = await axios.get(`http://localhost:8081/search`, {
             params: {
-                q: query,
-                format: 'geojson'
+                query: query,
             }
         })
         return res.data
