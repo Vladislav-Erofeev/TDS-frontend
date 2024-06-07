@@ -7,6 +7,7 @@ import VectorLayer from "ol/layer/Vector";
 import {Fill, Icon, Stroke, Style} from "ol/style";
 import CircleStyle from "ol/style/Circle";
 import {useSearchParams} from "react-router-dom";
+import SearchFilterComponent from "./SearchFilterComponent";
 
 const SearchComponent = ({map}) => {
     const [result, setResult] = useState([])
@@ -14,6 +15,7 @@ const SearchComponent = ({map}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [source, setSource] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
+    const [selectedCodes, setSelectedCodes] = useState([])
     useEffect(() => {
         if (map === null)
             return
@@ -51,7 +53,11 @@ const SearchComponent = ({map}) => {
     }, [map])
     useEffect(() => {
         let fetch = async () => {
-            let res = await SearchService.search(query)
+            let res = []
+            if (selectedCodes.length === 0)
+                res = await SearchService.search(query)
+            else
+                res = await SearchService.filterSearch(query, selectedCodes)
             setResult(res)
             setIsLoading(false)
         }
@@ -69,22 +75,25 @@ const SearchComponent = ({map}) => {
     }
     return (
         <div className={styles.search}>
-            <input type={"text"} value={query} onChange={(e) => {
-                setQuery(e.target.value)
-            }} placeholder={'поиск...'} className={query.length === 0 ? styles.empty_search : styles.search_bar}/>
-            <div className={styles.result} style={
-                query.length === 0 ? {display: 'none'} : null
-            }>
-                {isLoading ? <CircularProgress/> : result.length === 0 ? <p>Ничего не найдено</p> :
-                    result.map(item => <button
-                        onClick={() => {
-                            addToMap(item)
-                        }} key={item.id}>
-                        <p>{item.name}, {item.addr_country}, {item.addr_city},
-                            {item.addr_street}, {item.addr_housenumber}</p>
-                    </button>)
-                }
+            <div className={styles.bar}>
+                <input type={"text"} value={query} onChange={(e) => {
+                    setQuery(e.target.value)
+                }} placeholder={'поиск...'} className={query.length === 0 ? styles.empty_search : styles.search_bar}/>
+                <div className={styles.result} style={
+                    query.length === 0 ? {display: 'none'} : null
+                }>
+                    {isLoading ? <CircularProgress/> : result.length === 0 ? <p>Ничего не найдено</p> :
+                        result.map(item => <button
+                            onClick={() => {
+                                addToMap(item)
+                            }} key={item.id}>
+                            <p>{item.name}, {item.addr_country}, {item.addr_city},
+                                {item.addr_street}, {item.addr_housenumber}</p>
+                        </button>)
+                    }
+                </div>
             </div>
+            <SearchFilterComponent selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes}/>
         </div>
     );
 };
