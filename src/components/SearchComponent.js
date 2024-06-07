@@ -68,7 +68,7 @@ const SearchComponent = ({map}) => {
         }
         setIsLoading(true)
         fetch()
-    }, [query])
+    }, [query, selectedCodes])
 
     const addToMap = (item) => {
         setSearchParams({object: item.id})

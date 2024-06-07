@@ -14,7 +14,7 @@ export class SearchService {
         let res = await axios.get(`http://localhost:8081/search`, {
             params: {
                 query: query,
-                codes: codes
+                codes: codes.join(', ')
             }
         })
         return res.data
