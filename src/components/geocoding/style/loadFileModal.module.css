@@ -110,21 +110,19 @@
 }
 
 .load_btn {
-    background-color: var(--main-color);
+    background-color: #1b8ae5;
     padding: 10px 20px;
     color: white;
-    font-family: "Gotham Pro";
-    font-size: 14pt;
-    border-radius: 40px;
+    font-size: 12pt;
     border: none;
     cursor: pointer;
-    transition: 0.2s ease-out;
+    transition: 0.15s ease;
 }
 
 .load_btn:hover {
-    background-color: var(--main-color-hover);
+    background-color: #1980d3;
 }
 
 .load_btn:active {
-    background-color: var(--main-color-active);
+    background-color: #1176c7;
 }

@@ -2,12 +2,15 @@ import React, {useRef, useState} from 'react';
 import {Backdrop, CircularProgress} from "@mui/material";
 import styles from './style/loadFileModal.module.css'
 import {GeocodingService} from "../../services/GeocodingService";
+import {useDispatch} from "react-redux";
+import {setErrorAction} from "../../redux/messageReducer";
 
 const LoadFileModal = ({setGeocodings, open, setOpen}) => {
     const [dragActive, setDragActive] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const inputRef = useRef()
     const [file, setFile] = useState(null)
+    const dispatch = useDispatch()
 
     const handleDrag = (e) => {
         e.preventDefault()
@@ -40,6 +43,10 @@ const LoadFileModal = ({setGeocodings, open, setOpen}) => {
     };
 
     const load = () => {
+        if (file === null) {
+            dispatch(setErrorAction('Ошибка! Вы не загрузили файл'))
+            return
+        }
         setIsLoading(true)
         GeocodingService.createNew(file).then(() => {
             setIsLoading(false)
@@ -56,7 +63,7 @@ const LoadFileModal = ({setGeocodings, open, setOpen}) => {
                     <img src={'/icons/close.svg'} width={'25px'}/>
                 </button>
                 <h1>Загрузить файл</h1>
-                <p></p>
+                <p>Загрузите текстоый документ в кордироке UTF-8. Каждый новый адрес должен начинаться с новой строки</p>
                 <form className={styles.form_file_upload}
                       onDragEnter={handleDrag}>
                     <input onChange={handleChange} ref={inputRef} style={{display: 'none'}} type={'file'}/>
@@ -73,7 +80,7 @@ const LoadFileModal = ({setGeocodings, open, setOpen}) => {
 
                 </form>
                 {isLoading ? <CircularProgress/> :
-                    <button onClick={load}>
+                    <button onClick={load} className={styles.load_btn}>
                         Загрузить
                     </button>
                 }
