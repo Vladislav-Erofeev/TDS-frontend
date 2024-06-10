@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles/searchComponent.module.css'
 import {CircularProgress} from "@mui/material";
-import {SearchService} from "../services/SearchService";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import {Fill, Icon, Stroke, Style} from "ol/style";
 import CircleStyle from "ol/style/Circle";
 import {useSearchParams} from "react-router-dom";
 import SearchFilterComponent from "./SearchFilterComponent";
+import {GeocodingService as GecodingService} from "../services/GeocodingService";
 
 const SearchComponent = ({map}) => {
     const [result, setResult] = useState([])
@@ -55,9 +55,9 @@ const SearchComponent = ({map}) => {
         let fetch = async () => {
             let res = []
             if (selectedCodes.length === 0)
-                res = await SearchService.search(query)
+                res = await GecodingService.search(query)
             else
-                res = await SearchService.filterSearch(query, selectedCodes)
+                res = await GecodingService.filterSearch(query, selectedCodes)
             setResult(res)
             setIsLoading(false)
         }

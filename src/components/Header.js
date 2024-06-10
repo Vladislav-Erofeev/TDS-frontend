@@ -22,7 +22,10 @@ const Header = () => {
                         <li><NavLink to={'objects'}>объекты</NavLink></li>
                         <li><NavLink to={'classifier'}>классификатор</NavLink></li>
                         {hasRole("ADMIN", 'MODERATOR') ?
-                            <li><NavLink to={'unchecked'}>На проверку</NavLink></li>
+                            <>
+                                <li><NavLink to={'/geocoding'}>геокодер</NavLink></li>
+                                <li><NavLink to={'unchecked'}>на проверку</NavLink></li>
+                            </>
                             : null}
                     </ul>
                 </nav>

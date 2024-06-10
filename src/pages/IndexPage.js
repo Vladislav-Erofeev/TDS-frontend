@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import styles from './styles/indexPage.module.css'
 import {NavLink} from "react-router-dom";
 import {Divider} from "@mui/material";
 
 const IndexPage = () => {
+    const iframeRef = useRef()
+
+    useEffect(() => {
+        window.addEventListener('message', (e) => {
+            let size = e.data
+            iframeRef.current.style.height = size.height + 'px';
+        })
+    }, [])
     return (
         <div>
             <div className={styles.head_block}>
@@ -57,6 +65,8 @@ const IndexPage = () => {
             }} />
             <p className={styles.title_descr}>Добавляйте свои геоданные в понятной и удобной для обработки структуре</p>
             <img src={'/images/example.png'} className={styles.image} width={'80%'}/>
+            <iframe scrolling={'no'} ref={iframeRef} src={'http://localhost:1234/3d42f582-e02e-49e3-b5c7-2cb512c59cef.html'}
+            frameBorder={'0'}/>
             <footer className={styles.footer}>
                 <p>© TDS 2024. Все права защищены</p>
                 <p>+7 (999) 999-99-99</p>

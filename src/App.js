@@ -16,6 +16,7 @@ import ObjectsPage from "./pages/ObjectsPage";
 import ErrorAlert from "./ui/ErrorAlert";
 import UncheckedPage from "./pages/UncheckedPage";
 import RegisterPage from "./pages/RegisterPage";
+import GeocodingPage from "./pages/GeocodingPage";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
                         <Route element={<ClassifierPage/>} index/>
                         <Route path={'layers/:id'} element={<LayerPage/>}/>
                     </Route>
+                    <Route path={'geocoding'} element={<GeocodingPage />}  />
                     <Route path={'objects'} element={<ObjectsPage />}/>
                     <Route path={'profile'} element={<ProfilePage/>}/>
                     <Route path={'unchecked'} element={<UncheckedPage />}/>

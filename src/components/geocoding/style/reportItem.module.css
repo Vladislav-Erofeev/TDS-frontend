@@ -1,0 +1,19 @@
+.report_item {
+    border: solid;
+    width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.report_btn {
+    background: none;
+    color: #1b8ae5;
+    border: #1b8ae5 solid;
+    padding: 5px 10px;
+    font-size: 12pt;
+    cursor: pointer;
+}
