@@ -1,12 +1,32 @@
-.report_item {
+.report_item,
+.in_process {
     border: solid;
-    width: 80%;
     padding: 10px;
     border-radius: 10px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     align-items: center;
     justify-items: center;
+}
+
+.in_process {
+    border-color: #7c7c7c;
+    color: #7c7c7c;
+}
+
+.in_process .report_btn{
+    color: #7c7c7c;
+    border: #7c7c7c solid;
+}
+
+.in_process a {
+    color: #666666;
+    text-decoration: none;
+}
+
+.report_item a {
+    text-decoration: none;
+    color: #1b8ae5;
 }
 
 .report_btn {

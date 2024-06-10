@@ -4,7 +4,9 @@ import styles from './style/geocodingReportModal.module.css'
 
 const GeocodingReportModal = ({open, url, setOpen}) => {
     return (
-        <Backdrop open={open}>
+        <Backdrop sx={{
+            zIndex: '1'
+        }} open={open}>
             <div className={styles.main}>
                 <button className={styles.close_btn} onClick={() => {
                     setOpen(false)

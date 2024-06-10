@@ -1,0 +1,19 @@
+.load_file {
+    width: max-content;
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 10px;
+    border-style: dashed;
+    border-color: #1b8ae5;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.load_file span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11pt;
+    filter: invert(51%) sepia(82%) saturate(3518%) hue-rotate(184deg) brightness(94%) contrast(90%);
+}

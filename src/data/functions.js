@@ -58,3 +58,11 @@ export const isEmailCorrect = (email) => {
         );
 };
 
+export const getTimeWithTz = function (time) {
+    require('moment-timezone'); // important, if you remove this, it will crash
+    var mtz = moment.tz;
+    let m=mtz(time, "UTC").tz(mtz.guess())
+    return m.format("DD.MM.YYYY HH:mm")
+}
+
+
