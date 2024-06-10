@@ -40,14 +40,11 @@ const LoadFileModal = ({setGeocodings, open, setOpen}) => {
     };
 
     const load = () => {
-        const push = async () => {
-            let res = await GeocodingService.createNew(file)
-            setGeocodings(state => [...state, res])
+        setIsLoading(true)
+        GeocodingService.createNew(file).then(() => {
             setIsLoading(false)
             setOpen(false)
-        }
-        setIsLoading(true)
-        push()
+        })
     }
 
     return (

@@ -3,16 +3,29 @@ import {GeocodingService} from "../services/GeocodingService";
 import ReportItem from "../components/geocoding/ReportItem";
 import styles from './styles/geocodingPage.module.css'
 import LoadFileModal from "../components/geocoding/LoadFileModal";
-import {fetchEventSource} from "@microsoft/fetch-event-source";
-import {TokenService} from "../services/TokenService";
 
 const GeocodingPage = () => {
     const [geocodings, setGeocodings] = useState([])
     const [open, setOpen] = useState(false)
 
+    const addGeocoding = (msg) => {
+        let item = JSON.parse(msg.data)
+        setGeocodings(array => {
+            if (array.findIndex(obj => obj.id === item.id) >= 0) {
+                let arr = [...array]
+                arr.splice(array.findIndex(obj => obj.id === item.id), 1)
+                arr.push(item)
+                return arr
+            } else {
+                return [...array, item]
+            }
+        })
+    }
+
     useEffect(() => {
         let fetch = async () => {
             setGeocodings(await GeocodingService.getAll())
+            GeocodingService.openSseStream(addGeocoding)
         }
         fetch()
     }, [])

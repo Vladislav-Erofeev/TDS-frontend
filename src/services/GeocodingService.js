@@ -1,5 +1,6 @@
 import {TokenService} from "./TokenService";
 import axios from "axios";
+import {fetchEventSource} from "@microsoft/fetch-event-source";
 
 export class GeocodingService {
     static async getAll() {
@@ -41,5 +42,15 @@ export class GeocodingService {
             }
         })
         return res.data
+    }
+
+    static async openSseStream(callback) {
+        let token = await TokenService.getAccessToken()
+        await fetchEventSource(`${process.env.REACT_APP_GEOCODING_URL}/geocoding/notification-stream`, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {Authorization: `Bearer ${token}`},
+            onmessage: callback
+        })
     }
 }
