@@ -20,7 +20,8 @@ const Header = () => {
                     <ul>
                         <li><NavLink to={'map'}>карта</NavLink></li>
                         <li className={styles.expanded}>
-                            <p className={styles.expanded_btn}>продукты<img src={'/icons/-expand-more_89793.svg'} width={'20px'}/> </p>
+                            <p className={styles.expanded_btn}>продукты<img src={'/icons/-expand-more_89793.svg'}
+                                                                            width={'20px'}/></p>
                             <ul className={styles.expanded_links}>
                                 <li><NavLink to={'classifier'}>
                                     <img src={'/icons/book.svg'} width={'30px'}/>
@@ -33,7 +34,7 @@ const Header = () => {
                                     <img src={'/icons/globe.svg'} width={'30px'}/>
                                     <div>
                                         <p>Объекты</p>
-                                        <p>геоданные</p>
+                                        <p>Список геоданных</p>
                                     </div>
                                 </NavLink></li>
                                 <li><NavLink to={'geocoding'}>
@@ -43,13 +44,15 @@ const Header = () => {
                                         <p>Адресный поиск</p>
                                     </div>
                                 </NavLink></li>
+                                <li><NavLink to={'load'}>
+                                    <img src={'/icons/download.svg'} width={'30px'}/>
+                                    <div>
+                                        <p>Загрузка</p>
+                                        <p>Загрузить геоданные</p>
+                                    </div>
+                                </NavLink></li>
                             </ul>
                         </li>
-                        {hasRole("ADMIN", 'MODERATOR') ?
-                            <>
-                                <li><NavLink to={'unchecked'}>на проверку</NavLink></li>
-                            </>
-                            : null}
                     </ul>
                 </nav>
                 {
