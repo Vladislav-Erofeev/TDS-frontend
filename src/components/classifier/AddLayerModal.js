@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Backdrop, CircularProgress, TextField} from "@mui/material";
 import styles from './styles/addLayerModal.module.css'
-import {LayerService} from "../services/LayerService";
+import {LayerService} from "../../services/LayerService";
 
 const nullLayer = {
     name: '',

@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import styles from './styles/classifierPage.module.css'
 import {Tab, Tabs} from "@mui/material";
 import TabComponent from "../components/TabComponent";
-import LayersComponent from "../components/LayersComponent";
-import CodesTabComponent from "../components/CodesTabComponent";
-import AttributesTabComponent from "../components/AttributesTabComponent";
+import LayersComponent from "../components/classifier/LayersComponent";
+import CodesTabComponent from "../components/classifier/CodesTabComponent";
+import AttributesTabComponent from "../components/classifier/AttributesTabComponent";
 
 const ClassifierPage = () => {
     const [tab, setTab] = useState(0)

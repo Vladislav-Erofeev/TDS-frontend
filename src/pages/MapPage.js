@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import MapComponent from "../components/MapComponent";
-import SearchComponent from "../components/SearchComponent";
-import ObjectInfoComponent from "../components/ObjectInfoComponent";
-import MapObjectsComponent from "../components/MapObjectsComponent";
+import MapComponent from "../components/map/MapComponent";
+import SearchComponent from "../components/map/SearchComponent";
+import ObjectInfoComponent from "../components/map/ObjectInfoComponent";
+import MapObjectsComponent from "../components/map/MapObjectsComponent";
 import {hasRole} from "../data/functions";
 import {useSelector} from "react-redux";
 

@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {LayerService} from "../services/LayerService";
+import {LayerService} from "../../services/LayerService";
 import styles from './styles/layerComponent.module.css'
 import AddLayerModal from "./AddLayerModal";
 import {NavLink} from "react-router-dom";
-import {hasRole} from "../data/functions";
+import {hasRole} from "../../data/functions";
 import {useDispatch, useSelector} from "react-redux";
-import {setErrorAction} from "../redux/messageReducer";
+import {setErrorAction} from "../../redux/messageReducer";
 
 const LayersComponent = () => {
     const user = useSelector(state => state.user)

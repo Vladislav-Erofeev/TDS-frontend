@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles/searchFilterComponent.module.css'
-import {LayerService} from "../services/LayerService";
+import {LayerService} from "../../services/LayerService";
 
 const SearchFilterComponent = ({selectedCodes, setSelectedCodes}) => {
     const [open, setOpen] = useState()

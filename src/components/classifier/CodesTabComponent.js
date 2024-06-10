@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {CodeService} from "../services/CodeService";
+import {CodeService} from "../../services/CodeService";
 import CodeComponent from "./CodeComponent";
 import styles from './styles/codeTabComponent.module.css'
 import AddCodeModal from "./AddCodeModal";
-import {hasRole} from "../data/functions";
-import {setErrorAction} from "../redux/messageReducer";
+import {hasRole} from "../../data/functions";
+import {setErrorAction} from "../../redux/messageReducer";
 import {useDispatch} from "react-redux";
 
 const CodesTabComponent = () => {

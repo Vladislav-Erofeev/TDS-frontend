@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Backdrop} from "@mui/material";
 import styles from './styles/selectLayerModal.module.css'
-import {LayerService} from "../services/LayerService";
+import {LayerService} from "../../services/LayerService";
 
 const SelectLayerModal = ({open,setLayer, setOpen}) => {
     const [layers, setLayers] = useState([])

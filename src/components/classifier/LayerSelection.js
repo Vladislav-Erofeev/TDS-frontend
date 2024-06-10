@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {LayerService} from "../services/LayerService";
+import {LayerService} from "../../services/LayerService";
 import styles from './styles/layerSelection.module.css'
 import {useDispatch} from "react-redux";
-import {setErrorAction} from "../redux/messageReducer";
+import {setErrorAction} from "../../redux/messageReducer";
 
 const LayerSelection = ({setSelected}) => {
     const [layers, setLayers] = useState([])

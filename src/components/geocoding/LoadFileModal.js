@@ -4,6 +4,7 @@ import styles from './style/loadFileModal.module.css'
 import {GeocodingService} from "../../services/GeocodingService";
 import {useDispatch} from "react-redux";
 import {setErrorAction} from "../../redux/messageReducer";
+import {Axios, AxiosError} from "axios";
 
 const LoadFileModal = ({setGeocodings, open, setOpen}) => {
     const [dragActive, setDragActive] = useState(false)
@@ -51,6 +52,14 @@ const LoadFileModal = ({setGeocodings, open, setOpen}) => {
         GeocodingService.createNew(file).then(() => {
             setIsLoading(false)
             setOpen(false)
+            setFile(null)
+        }).catch(e => {
+            switch (e.code) {
+                case AxiosError.ERR_BAD_REQUEST:
+                    dispatch(setErrorAction('Ошибка! Неверный формат данных'))
+                    break
+            }
+            setIsLoading(false)
         })
     }
 
@@ -59,6 +68,7 @@ const LoadFileModal = ({setGeocodings, open, setOpen}) => {
             <div className={styles.container}>
                 <button className={styles.close_btn} onClick={() => {
                     setOpen(false)
+                    setFile(null)
                 }}>
                     <img src={'/icons/close.svg'} width={'25px'}/>
                 </button>

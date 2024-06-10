@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import styles from './styles/attributesTabComponent.module.css'
 import AddAttributeModal from "./AddAttributeModal";
-import {AttributeService} from "../services/AttributeService";
-import {hasRole} from "../data/functions";
+import {AttributeService} from "../../services/AttributeService";
+import {hasRole} from "../../data/functions";
 import {Popover} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {setErrorAction} from "../redux/messageReducer";
+import {setErrorAction} from "../../redux/messageReducer";
 
 const AttributesTabComponent = () => {
     const user = useSelector(state => state.user)

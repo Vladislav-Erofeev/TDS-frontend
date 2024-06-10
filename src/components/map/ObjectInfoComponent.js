@@ -1,17 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
 import styles from './styles/objectInfoComponent.module.css'
-import LayerSelection from "./LayerSelection";
+import LayerSelection from "../classifier/LayerSelection";
 import {Checkbox, CircularProgress, FormControlLabel, TextField} from "@mui/material";
-import {LayerService} from "../services/LayerService";
-import SelectCodesComponent from "./SelectCodesComponent";
-import {GeodataService} from "../services/GeodataService";
+import {LayerService} from "../../services/LayerService";
+import SelectCodesComponent from "../classifier/SelectCodesComponent";
+import {GeodataService} from "../../services/GeodataService";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import {Fill, Stroke, Style} from "ol/style";
 import Draw from 'ol/interaction/Draw.js'
 import {GeoJSON} from "ol/format";
 import {useDispatch} from "react-redux";
-import {setErrorAction, setSuccessAction} from "../redux/messageReducer";
+import {setErrorAction, setSuccessAction} from "../../redux/messageReducer";
 
 const nullObjects = {
     code: null,

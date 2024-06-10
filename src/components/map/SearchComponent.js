@@ -7,7 +7,7 @@ import {Fill, Icon, Stroke, Style} from "ol/style";
 import CircleStyle from "ol/style/Circle";
 import {useSearchParams} from "react-router-dom";
 import SearchFilterComponent from "./SearchFilterComponent";
-import {GeocodingService as GecodingService} from "../services/GeocodingService";
+import {GeocodingService as GecodingService} from "../../services/GeocodingService";
 
 const SearchComponent = ({map}) => {
     const [result, setResult] = useState([])

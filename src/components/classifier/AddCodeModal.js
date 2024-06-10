@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Backdrop, CircularProgress, TextField} from "@mui/material";
 import styles from './styles/addCodeModal.module.css'
-import {CodeService} from "../services/CodeService";
+import {CodeService} from "../../services/CodeService";
 import SelectLayerModal from "./SelectLayerModal";
 
 const nullCode = {

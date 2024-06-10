@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {GeodataService} from "../services/GeodataService";
+import {GeodataService} from "../../services/GeodataService";
 import {GeoJSON} from "ol/format";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
@@ -7,11 +7,11 @@ import {Fill, Stroke, Style} from "ol/style";
 import {Select} from "ol/interaction";
 import styles from './styles/mapObjectsComponents.module.css'
 import {CircularProgress} from "@mui/material";
-import {hasRole} from "../data/functions";
+import {hasRole} from "../../data/functions";
 import {NavLink, useSearchParams} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {setErrorAction, setSuccessAction} from "../redux/messageReducer";
-import {CodeService} from "../services/CodeService";
+import {setErrorAction, setSuccessAction} from "../../redux/messageReducer";
+import {CodeService} from "../../services/CodeService";
 
 const nullObject = {
     code: '',

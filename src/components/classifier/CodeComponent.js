@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styles from './styles/codeComponent.module.css'
 import {useSelector} from "react-redux";
-import {hasRole} from "../data/functions";
+import {hasRole} from "../../data/functions";
 
 const CodeComponent = ({code, remove}) => {
     const user = useSelector(state => state.user)

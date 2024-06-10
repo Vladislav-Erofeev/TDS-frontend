@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Backdrop, Checkbox, CircularProgress, FormControlLabel, TextField} from "@mui/material";
 import styles from "./styles/addLayerModal.module.css";
-import {AttributeService} from "../services/AttributeService";
+import {AttributeService} from "../../services/AttributeService";
 
 const nullAttribute = {
     name: '',

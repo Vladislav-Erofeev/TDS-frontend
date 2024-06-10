@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Backdrop} from "@mui/material";
 import styles from "./styles/selectAttributesModal.module.css";
-import {AttributeService} from "../services/AttributeService";
+import {AttributeService} from "../../services/AttributeService";
 
 const SelectAttributesModal = ({open, setOpen, callback, selected}) => {
     const [attributes, setAttributes] = useState([])

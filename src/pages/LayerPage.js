@@ -3,11 +3,11 @@ import {useParams} from "react-router";
 import {LayerService} from "../services/LayerService";
 import {Breadcrumbs, CircularProgress, Link, TextField} from "@mui/material";
 import styles from './styles/layerPage.module.css'
-import AddCodeModal from "../components/AddCodeModal";
+import AddCodeModal from "../components/classifier/AddCodeModal";
 import {Link as RouterLink,} from 'react-router-dom';
-import CodeComponent from "../components/CodeComponent";
+import CodeComponent from "../components/classifier/CodeComponent";
 import {CodeService} from "../services/CodeService";
-import SelectAttributesModal from "../components/SelectAttributesModal";
+import SelectAttributesModal from "../components/classifier/SelectAttributesModal";
 import {hasRole} from "../data/functions";
 import {useSelector} from "react-redux";
 import {AttributeService} from "../services/AttributeService";
