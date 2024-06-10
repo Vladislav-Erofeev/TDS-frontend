@@ -14,10 +14,10 @@ const GeocodingPage = () => {
             if (array.findIndex(obj => obj.id === item.id) >= 0) {
                 let arr = [...array]
                 arr.splice(array.findIndex(obj => obj.id === item.id), 1)
-                arr.push(item)
+                arr.unshift(item)
                 return arr
             } else {
-                return [...array, item]
+                return [item, ...array]
             }
         })
     }
