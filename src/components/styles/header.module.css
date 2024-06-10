@@ -46,3 +46,81 @@
     justify-content: center;
     gap: 10px;
 }
+
+.expanded {
+    position: relative;
+    height: max-content;
+}
+
+.expanded_links {
+    position: absolute;
+    display: flex;
+    left: 0;
+    transform: translateX(-25%);
+    flex-direction: column;
+    gap: 15px;
+    align-items: start !important;
+    font-size: 13pt;
+    max-height: 0;
+    padding: 30px 30px;
+    overflow: hidden;
+    height: max-content;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: white;
+    -webkit-box-shadow: 0px 7px 16px -3px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 7px 16px -3px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 7px 16px -3px rgba(34, 60, 80, 0.2);
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+    visibility: hidden;
+
+}
+
+.expanded_links a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s ease;
+    width: 100%;
+}
+
+.expanded_links a img {
+    background-color: #c4c4c4;
+    padding: 10px;
+    border-radius: 15px;
+    transition: 0.2s ease;
+}
+
+.expanded_links a:hover {
+    color: #1b8ae5;
+}
+
+.expanded_links a:hover img {
+    background-color: #1b8ae5;
+}
+
+.expanded:hover > .expanded_links {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.expanded_links p:last-child {
+    font-size: 10pt;
+}
+
+.expanded:hover .expanded_btn img {
+    transform: rotate(180deg);
+}
+
+.expanded .expanded_btn img {
+    transition: 0.2s ease;
+    transform: rotate(0);
+}
+
+.expanded_btn {
+    display: flex;
+    align-items: center;
+}

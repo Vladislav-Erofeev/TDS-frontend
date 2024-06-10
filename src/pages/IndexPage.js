@@ -4,14 +4,6 @@ import {NavLink} from "react-router-dom";
 import {Divider} from "@mui/material";
 
 const IndexPage = () => {
-    const iframeRef = useRef()
-
-    useEffect(() => {
-        window.addEventListener('message', (e) => {
-            let size = e.data
-            iframeRef.current.style.height = size.height + 'px';
-        })
-    }, [])
     return (
         <div>
             <div className={styles.head_block}>
@@ -45,13 +37,6 @@ const IndexPage = () => {
                         <p>Вы можете пользоваться геокодированными поиском объектов по адресу</p>
                     </div>
                 </div>
-                {/*<div className={styles.card_main}>*/}
-                {/*    <img src={'/images/image3.png'} width={'350px'}/>*/}
-                {/*    <div className={styles.card_description}>*/}
-                {/*        <h2>Тайловое покрытие</h2>*/}
-                {/*        <p>Описание</p>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
 
             <h1 style={{
@@ -65,8 +50,6 @@ const IndexPage = () => {
             }} />
             <p className={styles.title_descr}>Добавляйте свои геоданные в понятной и удобной для обработки структуре</p>
             <img src={'/images/example.png'} className={styles.image} width={'80%'}/>
-            <iframe scrolling={'no'} ref={iframeRef} src={'http://localhost:1234/3d42f582-e02e-49e3-b5c7-2cb512c59cef.html'}
-            frameBorder={'0'}/>
             <footer className={styles.footer}>
                 <p>© TDS 2024. Все права защищены</p>
                 <p>+7 (999) 999-99-99</p>
