@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import GeocodingReportModal from "./GeocodingReportModal";
 import styles from './style/reportItem.module.css'
 import {getTimeWithTz} from "../../data/functions";
-import {Menu, MenuItem} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem} from "@mui/material";
 import {GeocodingService} from "../../services/GeocodingService";
 
 const ReportItem = ({item, deleteCallback}) => {
     const [open, setOpen] = useState(false)
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
     const [anchor, setAnchor] = useState(null)
     const openMenu = Boolean(anchor)
 
@@ -56,14 +57,33 @@ const ReportItem = ({item, deleteCallback}) => {
                     <MenuItem onClick={handleClose}><a className={styles.menu_link}
                                                        href={`${process.env.REACT_APP_STATIC_URL}/${item.sourceFile}`}>Скачать
                         исходник</a></MenuItem>
-                    <MenuItem onClose={handleClose} onClick={() => {
-                        removeById(item.id)
+                    <MenuItem sx={{
+                        color: 'red'
+                    }} onClose={handleClose} onClick={() => {
+                        setOpenDeleteDialog(true)
                         handleClose()
                     }}>
                         Удалить
                     </MenuItem>
                 </Menu>
             </div>
+            <Dialog  open={openDeleteDialog}>
+                <DialogTitle>Подвердите удаление</DialogTitle>
+                <DialogContent>
+                    Вы собираетесь удалить объект геокодирования. Данное действие нельзя будет отменить
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => {
+                        setOpenDeleteDialog(false)
+                    }}>Отменить</Button>
+                    <Button sx={{
+                        color: 'red'
+                    }} onClick={() => {
+                        removeById(item.id)
+                        setOpenDeleteDialog(false)
+                    }}>Удалить</Button>
+                </DialogActions>
+            </Dialog>
             <GeocodingReportModal setOpen={setOpen} open={open} url={item.reportFile}/>
         </>
     );
