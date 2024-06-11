@@ -22,6 +22,14 @@ const GeocodingPage = () => {
         })
     }
 
+    const deleteGeocoding = (id) => {
+        setGeocodings(array => {
+            let arr = [...array]
+            arr.splice(arr.findIndex(item => item.id === id), 1)
+            return arr
+        })
+    }
+
     useEffect(() => {
         let fetch = async () => {
             setGeocodings(await GeocodingService.getAll())
@@ -51,7 +59,8 @@ const GeocodingPage = () => {
                 }}>
                     {geocodings.length === 0 ? <h2 style={{
                         textAlign: 'center'
-                    }}>Список пуст</h2> : geocodings.map(item => <ReportItem key={item.id} item={item}/>)}
+                    }}>Список пуст</h2> : geocodings.map(item => <ReportItem deleteCallback={deleteGeocoding}
+                                                                             key={item.id} item={item}/>)}
                     <button onClick={() => {
                         setOpen(true)
                     }} className={styles.load_file}>

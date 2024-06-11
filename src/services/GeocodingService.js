@@ -53,4 +53,13 @@ export class GeocodingService {
             onmessage: callback
         })
     }
+
+    static async deleteByyId(fileId) {
+        let token = await TokenService.getAccessToken()
+        await axios.delete(`${process.env.REACT_APP_GEOCODING_URL}/geocoding/${fileId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }
 }

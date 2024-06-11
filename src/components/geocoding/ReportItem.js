@@ -3,8 +3,9 @@ import GeocodingReportModal from "./GeocodingReportModal";
 import styles from './style/reportItem.module.css'
 import {getTimeWithTz} from "../../data/functions";
 import {Menu, MenuItem} from "@mui/material";
+import {GeocodingService} from "../../services/GeocodingService";
 
-const ReportItem = ({item}) => {
+const ReportItem = ({item, deleteCallback}) => {
     const [open, setOpen] = useState(false)
     const [anchor, setAnchor] = useState(null)
     const openMenu = Boolean(anchor)
@@ -16,6 +17,15 @@ const ReportItem = ({item}) => {
     const handleClose = () => {
         setAnchor(null);
     };
+
+    const removeById = (id) => {
+        const push = async () => {
+            await GeocodingService.deleteByyId(id)
+        }
+
+        push()
+        deleteCallback(id)
+    }
 
     return (
         <>
@@ -46,6 +56,12 @@ const ReportItem = ({item}) => {
                     <MenuItem onClick={handleClose}><a className={styles.menu_link}
                                                        href={`${process.env.REACT_APP_STATIC_URL}/${item.sourceFile}`}>Скачать
                         исходник</a></MenuItem>
+                    <MenuItem onClose={handleClose} onClick={() => {
+                        removeById(item.id)
+                        handleClose()
+                    }}>
+                        Удалить
+                    </MenuItem>
                 </Menu>
             </div>
             <GeocodingReportModal setOpen={setOpen} open={open} url={item.reportFile}/>
