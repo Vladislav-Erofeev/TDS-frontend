@@ -1,0 +1,68 @@
+.main {
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.project {
+    display: flex;
+    justify-content: space-between;
+    border: solid black;
+    border-radius: 10px;
+    padding: 10px 20px;
+    align-items: center;
+    color: black;
+    text-decoration: none;
+    transition: 0.15s ease;
+}
+
+.project:hover {
+    transform: scale(102%);
+}
+
+.project_action {
+    display: flex;
+    gap: 10px;
+}
+
+.project button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.project button:hover {
+    transform: scale(105%);
+}
+
+
+.add_layer {
+    width: max-content;
+    padding: 10px 15px;
+    background-color: white;
+    border-radius: 10px;
+    border-style: dashed;
+    border-color: #1b8ae5;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+
+.add_layer span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 11pt;
+    filter: invert(51%) sepia(82%) saturate(3518%) hue-rotate(184deg) brightness(94%) contrast(90%);
+}

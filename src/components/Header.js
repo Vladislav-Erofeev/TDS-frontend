@@ -51,6 +51,13 @@ const Header = () => {
                                         <p>Загрузить геоданные</p>
                                     </div>
                                 </NavLink></li>
+                                <li><NavLink to={'projects'}>
+                                    <img src={'/icons/projects.svg'} width={'30px'}/>
+                                    <div>
+                                        <p>Проекты</p>
+                                        <p>Совместная работа</p>
+                                    </div>
+                                </NavLink></li>
                             </ul>
                         </li>
                     </ul>

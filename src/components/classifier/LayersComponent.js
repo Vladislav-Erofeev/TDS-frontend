@@ -3,7 +3,7 @@ import {LayerService} from "../../services/LayerService";
 import styles from './styles/layerComponent.module.css'
 import AddLayerModal from "./AddLayerModal";
 import {NavLink} from "react-router-dom";
-import {hasRole} from "../../data/functions";
+import {hasRole, transliterate} from "../../data/functions";
 import {useDispatch, useSelector} from "react-redux";
 import {setErrorAction} from "../../redux/messageReducer";
 
@@ -42,7 +42,7 @@ const LayersComponent = () => {
         <div>
             <div className={styles.list}>
                 { layers.length === 0 ? <h2 style={{textAlign: 'center'}}>Список пуст</h2> :
-                    layers.map(item => <NavLink to={`layers/${item.id}`} key={item.id}
+                    layers.map(item => <NavLink to={`layers/${item.id}/${item.name}`} key={item.id}
                                                 className={styles.layer}>
                         <p>{item.name} - {item.hname}</p>
                         <p>{item.creationDate}</p>

@@ -16,6 +16,7 @@ import ObjectsPage from "./pages/ObjectsPage";
 import ErrorAlert from "./ui/ErrorAlert";
 import RegisterPage from "./pages/RegisterPage";
 import GeocodingPage from "./pages/GeocodingPage";
+import ProjectsPage from "./pages/ProjectsPage";
 
 
 function App() {
@@ -40,11 +41,12 @@ function App() {
                     <Route path={'map'} element={<MapPage/>}/>
                     <Route path={'classifier'}>
                         <Route element={<ClassifierPage/>} index/>
-                        <Route path={'layers/:id'} element={<LayerPage/>}/>
+                        <Route path={'layers/:id/:name'} element={<LayerPage/>}/>
                     </Route>
                     <Route path={'geocoding'} element={<GeocodingPage/>}/>
                     <Route path={'objects'} element={<ObjectsPage/>}/>
                     <Route path={'profile'} element={<ProfilePage/>}/>
+                    <Route path={'projects'} element={<ProjectsPage/>} />
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
                 <Route path={'/register'} element={<RegisterPage/>}/>
