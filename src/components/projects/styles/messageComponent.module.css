@@ -1,0 +1,12 @@
+.message {
+    display: flex;
+    max-width: 40%;
+    width: max-content;
+    gap: 10px;
+}
+
+.content {
+    background-color: #1b8ae5;
+    border-radius: 10px;
+    padding: 10px;
+}
