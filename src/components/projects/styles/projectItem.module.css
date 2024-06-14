@@ -1,0 +1,48 @@
+.project {
+    -webkit-box-shadow: 0px 1px 4px 0px rgba(72, 87, 97, 0.29);
+    -moz-box-shadow: 0px 1px 4px 0px rgba(72, 87, 97, 0.29);
+    box-shadow: 0px 1px 4px 0px rgba(72, 87, 97, 0.29);
+    padding: 20px;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: 0.3s ease;
+}
+
+.project:hover {
+    transform: scale(103%);
+    -webkit-box-shadow: 0px 4px 14px 0px rgba(41, 103, 150, 0.2);
+    -moz-box-shadow: 0px 4px 14px 0px rgba(41, 103, 150, 0.2);
+    box-shadow: 0px 4px 14px 0px rgba(41, 103, 150, 0.2);
+}
+
+.link {
+    color: white;
+    background-color: #1b8ae5;
+    padding: 5px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.link:hover {
+    background-color: #1478c9;
+}
+
+.project_actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.project_actions button {
+    background: none;
+    border: none;
+    transition: 0.15s ease;
+}
+
+.project_actions button:hover {
+    transform: scale(120%);
+    cursor: pointer;
+}

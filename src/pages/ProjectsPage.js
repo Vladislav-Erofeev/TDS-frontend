@@ -23,14 +23,14 @@ const ProjectsPage = () => {
             }}>Здесь располагаются ваши проекты для совместной работы с другими пользователями</p>
             <div className={styles.list}>
                 {projects.map(item => <ProjectItem setProjects={setProjects} key={item.id} item={item} /> )}
+                <button className={styles.add_layer} onClick={() => {
+                    setOpenAddProjectModal(true)
+                }}>
+                    <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить проект</span>
+                </button>
             </div>
-            <button className={styles.add_layer} onClick={() => {
-                setOpenAddProjectModal(true)
-            }}>
-                <span><img src={'/icons/add.svg'} width={'20px'}/> Добавить проект</span>
-            </button>
             <AddProjectModal open={openAddProjectModal} setOpen={setOpenAddProjectModal} />
-            //TODO сделать редактирование проекта
+            {/*TODO сделать редактирование проекта*/}
         </div>
     );
 };

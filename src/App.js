@@ -17,6 +17,7 @@ import ErrorAlert from "./ui/ErrorAlert";
 import RegisterPage from "./pages/RegisterPage";
 import GeocodingPage from "./pages/GeocodingPage";
 import ProjectsPage from "./pages/ProjectsPage";
+import ProjectPage from "./pages/ProjectPage";
 
 
 function App() {
@@ -46,7 +47,8 @@ function App() {
                     <Route path={'geocoding'} element={<GeocodingPage/>}/>
                     <Route path={'objects'} element={<ObjectsPage/>}/>
                     <Route path={'profile'} element={<ProfilePage/>}/>
-                    <Route path={'projects'} element={<ProjectsPage/>} />
+                    <Route path={'projects'} element={<ProjectsPage/>}/>
+                    <Route path={'projects/:id/:name'} element={<ProjectPage/>}/>
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
                 <Route path={'/register'} element={<RegisterPage/>}/>
