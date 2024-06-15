@@ -4,13 +4,14 @@ import {ProjectsService} from "../services/ProjectsService";
 import {getTimeWithTz} from "../data/functions";
 import styles from'./styles/projectPage.module.css'
 import {Tab, Tabs} from "@mui/material";
-import {NavLink} from "react-router-dom";
+import {NavLink, useSearchParams} from "react-router-dom";
 import TabComponent from "../components/TabComponent";
 import ChatComponent from "../components/projects/ChatComponent";
 
 const ProjectPage = () => {
     const {id} = useParams()
     const [tab, setTab] = useState(0)
+    const [searchParams, setSearchParams] = useSearchParams()
     const [project, setProject] = useState({
         name: '',
         createdAt: '',
@@ -19,9 +20,14 @@ const ProjectPage = () => {
     useEffect(() => {
         let fetch = async () => {
             setProject(await ProjectsService.getById(id))
+            if (searchParams.has('tab')) {
+                if (!isNaN(parseInt(searchParams.get('tab'))))
+                    setTab(parseInt(searchParams.get('tab')))
+            }
         }
         fetch()
-    })
+    }, [])
+
     return (
         <div className={styles.main}>
             <NavLink to={'/projects'}>Назад</NavLink>
@@ -43,6 +49,7 @@ const ProjectPage = () => {
             </div>
             <Tabs value={tab} onChange={(e, v) => {
                 setTab(v)
+                setSearchParams({tab: v})
             }}>
                 <Tab label={'Активность'}/>
                 <Tab label={'Пользователи'}/>
@@ -50,7 +57,7 @@ const ProjectPage = () => {
                 <Tab label={'Комментарии'}/>
             </Tabs>
 
-            <TabComponent value={2} currentValue={tab} component={<ChatComponent />} />
+            <TabComponent value={2} currentValue={tab} component={<ChatComponent projectId={id} />} />
         </div>
     );
 };

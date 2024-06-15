@@ -52,4 +52,29 @@ export class ProjectsService {
 
         return res.data
     }
+
+    static async accessInvite(hash) {
+        let token = await TokenService.getAccessToken()
+        let res = await axios.get(`${process.env.REACT_APP_PROJECTS_URL}/projects/invite`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                token: hash
+            }
+        })
+
+        return res.data
+    }
+
+    static async fetchMessages(projectId) {
+        let token = await TokenService.getAccessToken()
+        let res = await axios.get(`${process.env.REACT_APP_PROJECTS_URL}/messages/${projectId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        return res.data
+    }
 }

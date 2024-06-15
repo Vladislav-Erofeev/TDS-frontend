@@ -18,6 +18,7 @@ import RegisterPage from "./pages/RegisterPage";
 import GeocodingPage from "./pages/GeocodingPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectPage from "./pages/ProjectPage";
+import InvitePage from "./pages/InvitePage";
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
                 <Route path={'/register'} element={<RegisterPage/>}/>
+                <Route path={'/invite'} element={<InvitePage />} />
             </Routes>
             <SuccessAlert/>
             <ErrorAlert/>
