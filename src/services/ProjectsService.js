@@ -77,4 +77,15 @@ export class ProjectsService {
 
         return res.data
     }
+
+    static async getAllPersonsInProject(projectId) {
+        let token = await TokenService.getAccessToken()
+        let res = await axios.get(`${process.env.REACT_APP_PROJECTS_URL}/projects/${projectId}/persons`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        return res.data
+    }
 }

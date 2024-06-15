@@ -27,7 +27,7 @@
 }
 
 .message .content {
-    box-shadow: 4px 3px 5px 3px rgba(0,0,0,0.1);
+    box-shadow: 4px 3px 5px 3px rgba(0, 0, 0, 0.1);
 }
 
 .message .content p:first-child {
@@ -45,4 +45,15 @@
     float: right;
     font-size: 10pt;
     margin-top: -5px;
+}
+
+.sender_data {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.sender_data p:last-child {
+    font-size: 10pt;
+    color: gray;
 }

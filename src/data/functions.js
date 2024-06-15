@@ -46,6 +46,20 @@ export function stringAvatar(name) {
     };
 }
 
+export function chatStringAvatar(name) {
+    if (name.length == 0)
+        return
+    return {
+        sx: {
+            width: '40px',
+            height: '40px',
+            bgcolor: stringToColor(name),
+            fontSize: '10pt',
+        },
+        children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    };
+}
+
 export function isDateCorrect(date) {
     return date.split('.').length === 3 && date.match('[0-9]{2}\.[0-9]{2}\.[0-9]{4}') && moment(date, 'DD.MM.YYYY').isValid()
 }

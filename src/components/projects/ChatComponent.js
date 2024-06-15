@@ -4,9 +4,11 @@ import styles from './styles/chatComponent.module.css'
 import MessageComponent from "./MessageComponent";
 import {useSelector} from "react-redux";
 import {ProjectsService} from "../../services/ProjectsService";
+import {ProfileService} from "../../services/ProfileService";
 
 const ChatComponent = ({projectId}) => {
     const [messages, setMessages] = useState([])
+    const [users, setUsers] = useState({})
     const chatAreaRef = useRef()
     const [typeText, setTypeText] = useState('')
     const user = useSelector(state => state.user)
@@ -27,6 +29,7 @@ const ChatComponent = ({projectId}) => {
         }, () => {
         })
         fetchMessages()
+        fetchPersons()
     }, [])
 
     const sendMessage = (personId, text) => {
@@ -44,12 +47,24 @@ const ChatComponent = ({projectId}) => {
     const fetchMessages = async () => {
         setMessages(await ProjectsService.fetchMessages(projectId))
     }
+
+    const fetchPersons = async () => {
+        let persons = await ProjectsService.getAllPersonsInProject(projectId)
+        let users = {}
+        for (let item of persons) {
+            let person = await ProfileService.getProfileById(item.personId)
+            person['projectRole'] = item.role
+            users[item.personId] = person
+        }
+        setUsers(users)
+    }
     return (
         <div className={styles.chat}>
             <div ref={chatAreaRef} className={styles.chat_area}>
                 {
                     messages.map(item =>
-                        <MessageComponent item={item} self={item.personId === user.id}/>
+                        <MessageComponent key={item.id} item={item} sender={users[item.personId]}
+                                          self={item.personId === user.id}/>
                     )
                 }
             </div>

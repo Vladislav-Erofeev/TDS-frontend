@@ -1,9 +1,9 @@
 import React from 'react';
 import {Avatar} from "@mui/material";
 import styles from './styles/messageComponent.module.css'
-import {getTimeWithTz} from "../../data/functions";
+import {chatStringAvatar, getTimeWithTz, stringAvatar} from "../../data/functions";
 
-const MessageComponent = ({self, item}) => {
+const MessageComponent = ({self, item, sender}) => {
     return (
         self ? <div className={styles.self_message}>
                 <div className={styles.content}>
@@ -12,9 +12,15 @@ const MessageComponent = ({self, item}) => {
                 </div>
             </div> :
             <div className={styles.message}>
-                <Avatar/>
+                {sender ?
+                    <Avatar {...chatStringAvatar(sender.name + " " + sender.surname)}/>
+                : <Avatar />}
                 <div className={styles.content}>
-                    <p>{item.personId}</p>
+                    <div className={styles.sender_data}>
+                        <p>{sender ? sender.name + " " + sender.surname : null}</p>
+                        <p>{sender.projectRole === 'OWNER' ? 'Владелец' :
+                        sender.projectRole === 'ADMIN' ? 'Администратор' : null}</p>
+                    </div>
                     <p className={styles.message_content}>{item.content}</p>
                     <p className={styles.send_time}>{getTimeWithTz(item.sendTime, "HH:mm")}</p>
                 </div>
