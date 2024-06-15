@@ -3,3 +3,13 @@
     margin: auto;
     margin-top: 50px;
 }
+
+.back_link {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+.back_link:hover {
+    text-decoration: underline;
+}

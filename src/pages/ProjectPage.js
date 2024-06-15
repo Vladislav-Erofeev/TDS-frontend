@@ -7,6 +7,7 @@ import {Tab, Tabs} from "@mui/material";
 import {NavLink, useSearchParams} from "react-router-dom";
 import TabComponent from "../components/TabComponent";
 import ChatComponent from "../components/projects/ChatComponent";
+import UsersComponent from "../components/projects/UsersComponent";
 
 const ProjectPage = () => {
     const {id} = useParams()
@@ -30,8 +31,11 @@ const ProjectPage = () => {
 
     return (
         <div className={styles.main}>
-            <NavLink to={'/projects'}>Назад</NavLink>
-            <h1>Проект: {project.name}</h1>
+            <NavLink to={'/projects'} className={styles.back_link}><img src={'/icons/back_arrow.svg'} width={'20px'}/>
+                к проектам</NavLink>
+            <h1 style={{
+                marginTop: '10px'
+            }}>Проект: {project.name}</h1>
             <p style={{
                 marginTop: '10px'
             }}>Создан: {getTimeWithTz(project.createdAt)}</p>
@@ -57,6 +61,7 @@ const ProjectPage = () => {
                 <Tab label={'Комментарии'}/>
             </Tabs>
 
+            <TabComponent value={1} currentValue={tab} component={<UsersComponent projectId={id}/>}/>
             <TabComponent value={2} currentValue={tab} component={<ChatComponent projectId={id} />} />
         </div>
     );

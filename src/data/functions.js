@@ -46,15 +46,15 @@ export function stringAvatar(name) {
     };
 }
 
-export function chatStringAvatar(name) {
+export function chatStringAvatar(name, size = '40px', textSize = '10pt') {
     if (name.length == 0)
         return
     return {
         sx: {
-            width: '40px',
-            height: '40px',
+            width: size,
+            height: size,
             bgcolor: stringToColor(name),
-            fontSize: '10pt',
+            fontSize: textSize,
         },
         children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
     };

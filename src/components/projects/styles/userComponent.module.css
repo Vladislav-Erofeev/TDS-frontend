@@ -1,0 +1,14 @@
+.main {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.list_header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 20px;
+    padding: 0 20px;
+}

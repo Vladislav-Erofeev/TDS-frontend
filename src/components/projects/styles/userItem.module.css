@@ -1,0 +1,29 @@
+.list_item {
+    padding: 5px 10px;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 2fr repeat(2, 1fr) 25px;
+    border:solid;
+    border-color: #d7d7d7;
+    border-radius: 10px;
+}
+
+.base_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.name {
+    color: #1b8ae5;
+}
+
+.role {
+    color: gray;
+}
+
+.actions {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
