@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {TextField} from "@mui/material";
+import {Menu, MenuItem, TextField} from "@mui/material";
 import styles from './styles/chatComponent.module.css'
 import MessageComponent from "./MessageComponent";
 import {useSelector} from "react-redux";
@@ -14,6 +14,27 @@ const ChatComponent = ({projectId}) => {
     const user = useSelector(state => state.user)
     const stompRef = useRef()
 
+    const [anchorMsg, setAnchorMsg] = useState({
+        anchor: null,
+        id: ''
+    })
+    const openMessageMenu = Boolean(anchorMsg.anchor)
+
+    function handleMessage(message) {
+        switch (message.type) {
+            case 'SEND': {
+                setMessages(messages => [...messages, message.message])
+            }
+            case 'DELETE': {
+                setMessages(messages => {
+                    let arr = [...messages]
+                    arr.splice(arr.findIndex(item => item.id === message.message.id), 1)
+                    return arr
+                })
+            }
+        }
+    }
+
     useEffect(() => {
         if (stompRef.current != null)
             return
@@ -24,7 +45,7 @@ const ChatComponent = ({projectId}) => {
         stompRef.current = client
         client.connect({}, () => {
             client.subscribe(`/messages/${projectId}`, (e) => {
-                setMessages(messages => [...messages, JSON.parse(e.body)])
+                handleMessage(JSON.parse(e.body))
             })
         }, () => {
         })
@@ -34,9 +55,21 @@ const ChatComponent = ({projectId}) => {
 
     const sendMessage = (personId, text) => {
         stompRef.current.send(`/app/chat/${projectId}`, {}, JSON.stringify({
-            personId: personId,
-            projectId: projectId,
-            content: text
+            type: 'SEND',
+            message: {
+                personId: personId,
+                projectId: projectId,
+                content: text
+            }
+        }))
+    }
+
+    const sendDeleteEvent = (id) => {
+        stompRef.current.send(`/app/chat/${projectId}`, {}, JSON.stringify({
+            type: 'DELETE',
+            message: {
+                id: id
+            }
         }))
     }
 
@@ -45,7 +78,7 @@ const ChatComponent = ({projectId}) => {
     }, [messages])
 
     const fetchMessages = async () => {
-        setMessages(await ProjectsService.fetchMessages(projectId))
+        setMessages((await ProjectsService.fetchMessages(projectId)).map(msg => msg.message))
     }
 
     const fetchPersons = async () => {
@@ -64,9 +97,25 @@ const ChatComponent = ({projectId}) => {
                 {
                     messages.map(item =>
                         <MessageComponent key={item.id} item={item} sender={users[item.personId]}
+                                          rightClickCallback={setAnchorMsg}
                                           self={item.personId === user.id}/>
                     )
                 }
+                <Menu open={openMessageMenu} onClose={() => {
+                    setAnchorMsg({
+                        anchor: null,
+                        id: ''
+                    })
+                }} anchorEl={anchorMsg.anchor}>
+                    <MenuItem>Редактировать</MenuItem>
+                    <MenuItem onClick={() => {
+                        sendDeleteEvent(anchorMsg.id)
+                        setAnchorMsg({
+                            anchor: null,
+                            id: ''
+                        })
+                    }}>Удалить</MenuItem>
+                </Menu>
             </div>
             <div className={styles.message_area} onKeyDown={(e) => {
                 if (e.key === 'Enter') {

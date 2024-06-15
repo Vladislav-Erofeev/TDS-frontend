@@ -3,9 +3,17 @@ import {Avatar} from "@mui/material";
 import styles from './styles/messageComponent.module.css'
 import {chatStringAvatar, getTimeWithTz, stringAvatar} from "../../data/functions";
 
-const MessageComponent = ({self, item, sender}) => {
+const MessageComponent = ({self, item, sender, rightClickCallback}) => {
+    const handleOpen = (e) => {
+        e.preventDefault()
+        rightClickCallback({
+            anchor: e.target,
+            id: item.id
+        })
+    }
+
     return (
-        self ? <div className={styles.self_message}>
+        self ? <div className={styles.self_message} onContextMenu={handleOpen}>
                 <div className={styles.content}>
                     <p className={styles.message_content}>{item.content}</p>
                     <p className={styles.send_time}>{getTimeWithTz(item.sendTime, "HH:mm")}</p>
@@ -14,12 +22,16 @@ const MessageComponent = ({self, item, sender}) => {
             <div className={styles.message}>
                 {sender ?
                     <Avatar {...chatStringAvatar(sender.name + " " + sender.surname)}/>
-                : <Avatar />}
+                    : <Avatar/>}
                 <div className={styles.content}>
                     <div className={styles.sender_data}>
                         <p>{sender ? sender.name + " " + sender.surname : null}</p>
-                        <p>{sender.projectRole === 'OWNER' ? 'Владелец' :
-                        sender.projectRole === 'ADMIN' ? 'Администратор' : null}</p>
+                        {sender ?
+                            <p>{sender.projectRole === 'OWNER' ? 'Владелец' :
+                                sender.projectRole === 'ADMIN' ? 'Администратор' : null}</p>
+                            :
+                            null
+                        }
                     </div>
                     <p className={styles.message_content}>{item.content}</p>
                     <p className={styles.send_time}>{getTimeWithTz(item.sendTime, "HH:mm")}</p>
