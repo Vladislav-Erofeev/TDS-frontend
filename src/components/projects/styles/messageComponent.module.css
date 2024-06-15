@@ -38,6 +38,7 @@
 
 .self_message .send_time {
     color: #1b8ae5;
+    display: flex;
 }
 
 .send_time {

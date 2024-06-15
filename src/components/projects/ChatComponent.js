@@ -7,31 +7,44 @@ import {ProjectsService} from "../../services/ProjectsService";
 import {ProfileService} from "../../services/ProfileService";
 
 const ChatComponent = ({projectId}) => {
+    const user = useSelector(state => state.user)
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState({})
     const chatAreaRef = useRef()
-    const [typeText, setTypeText] = useState('')
-    const user = useSelector(state => state.user)
+    const [newMessage, setNewMessage] = useState({
+        personId: user.id,
+        projectId: projectId,
+        content: ''
+    })
     const stompRef = useRef()
-
     const [anchorMsg, setAnchorMsg] = useState({
         anchor: null,
-        id: ''
+        id: '',
+        content: ''
     })
+
     const openMessageMenu = Boolean(anchorMsg.anchor)
+    const [editMsg, setEditMsg] = useState(false)
 
     function handleMessage(message) {
         switch (message.type) {
-            case 'SEND': {
+            case 'SEND':
                 setMessages(messages => [...messages, message.message])
-            }
-            case 'DELETE': {
+                return
+            case 'DELETE':
                 setMessages(messages => {
                     let arr = [...messages]
                     arr.splice(arr.findIndex(item => item.id === message.message.id), 1)
                     return arr
                 })
-            }
+                return;
+            case 'EDIT':
+                setMessages(messages => {
+                    let arr = [...messages]
+                    arr.splice(arr.findIndex(item => item.id === message.message.id), 1, message.message)
+                    return arr
+                })
+                return;
         }
     }
 
@@ -53,14 +66,10 @@ const ChatComponent = ({projectId}) => {
         fetchPersons()
     }, [])
 
-    const sendMessage = (personId, text) => {
+    const sendMessage = (message) => {
         stompRef.current.send(`/app/chat/${projectId}`, {}, JSON.stringify({
             type: 'SEND',
-            message: {
-                personId: personId,
-                projectId: projectId,
-                content: text
-            }
+            message: message
         }))
     }
 
@@ -70,6 +79,13 @@ const ChatComponent = ({projectId}) => {
             message: {
                 id: id
             }
+        }))
+    }
+
+    const sendEditEvent = (id, message) => {
+        stompRef.current.send(`/app/chat/${projectId}`, {}, JSON.stringify({
+            type: 'EDIT',
+            message: {...message, id: id}
         }))
     }
 
@@ -91,6 +107,20 @@ const ChatComponent = ({projectId}) => {
         }
         setUsers(users)
     }
+
+    const pushMessage = (editMsg, message) => {
+        if (editMsg) {
+            sendEditEvent(anchorMsg.id, message)
+        } else {
+            sendMessage(message)
+        }
+        setNewMessage({
+            personId: user.id,
+            projectId: projectId,
+            content: ''
+        })
+        setEditMsg(false)
+    }
     return (
         <div className={styles.chat}>
             <div ref={chatAreaRef} className={styles.chat_area}>
@@ -104,31 +134,36 @@ const ChatComponent = ({projectId}) => {
                 <Menu open={openMessageMenu} onClose={() => {
                     setAnchorMsg({
                         anchor: null,
-                        id: ''
+                        id: '',
+                        content: ''
                     })
+                    setEditMsg(false)
                 }} anchorEl={anchorMsg.anchor}>
-                    <MenuItem>Редактировать</MenuItem>
+                    <MenuItem onClick={() => {
+                        setNewMessage({...newMessage, content: anchorMsg.content})
+                        setEditMsg(true)
+                        setAnchorMsg({...anchorMsg, anchor: null})
+                    }}>Редактировать</MenuItem>
                     <MenuItem onClick={() => {
                         sendDeleteEvent(anchorMsg.id)
                         setAnchorMsg({
                             anchor: null,
-                            id: ''
+                            id: '',
+                            content: ''
                         })
                     }}>Удалить</MenuItem>
                 </Menu>
             </div>
             <div className={styles.message_area} onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                    sendMessage(user.id, typeText)
-                    setTypeText('')
+                    pushMessage(editMsg, newMessage)
                 }
             }}>
-                <TextField value={typeText} onChange={(e) => {
-                    setTypeText(e.target.value)
+                <TextField value={newMessage.content} onChange={(e) => {
+                    setNewMessage({...newMessage, content: e.target.value })
                 }} placeholder={'Введите сообщение'} fullWidth/>
                 <button className={styles.send_btn} onClick={() => {
-                    sendMessage(user.id, typeText)
-                    setTypeText('')
+                    pushMessage(editMsg, newMessage)
                 }}>
                     <img src={'/icons/send.svg'} width={'25px'}/>
                 </button>

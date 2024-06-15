@@ -8,7 +8,8 @@ const MessageComponent = ({self, item, sender, rightClickCallback}) => {
         e.preventDefault()
         rightClickCallback({
             anchor: e.target,
-            id: item.id
+            id: item.id,
+            content: item.content
         })
     }
 
@@ -16,7 +17,8 @@ const MessageComponent = ({self, item, sender, rightClickCallback}) => {
         self ? <div className={styles.self_message} onContextMenu={handleOpen}>
                 <div className={styles.content}>
                     <p className={styles.message_content}>{item.content}</p>
-                    <p className={styles.send_time}>{getTimeWithTz(item.sendTime, "HH:mm")}</p>
+                    <p className={styles.send_time}>{item.edited ? 'изменено ' : ''}
+                        {getTimeWithTz(item.sendTime, "HH:mm")}</p>
                 </div>
             </div> :
             <div className={styles.message}>
@@ -34,7 +36,8 @@ const MessageComponent = ({self, item, sender, rightClickCallback}) => {
                         }
                     </div>
                     <p className={styles.message_content}>{item.content}</p>
-                    <p className={styles.send_time}>{getTimeWithTz(item.sendTime, "HH:mm")}</p>
+                    <p className={styles.send_time}>{item.edited ? 'изменено ' : ''}
+                        {getTimeWithTz(item.sendTime, "HH:mm")}</p>
                 </div>
             </div>
     );
