@@ -2,14 +2,19 @@ import React, {useState} from 'react';
 import {Avatar, Menu, MenuItem} from "@mui/material";
 import {chatStringAvatar} from "../../data/functions";
 import styles from './styles/userItem.module.css'
+import {ProjectsService} from "../../services/ProjectsService";
+import {useDispatch} from "react-redux";
+import {AxiosError} from "axios";
+import {setErrorAction} from "../../redux/messageReducer";
 
 const projectRoleDecoding = {
     'OWNER': 'Владелец',
     'ADMIN': 'Администратор',
     'USER': ''
 }
-const UserItem = ({user, self}) => {
+const UserItem = ({user, self, projectId}) => {
     const [menuAnchor, setMenuAnchor] = useState(null)
+    const dispatch = useDispatch()
     const openMenu = Boolean(menuAnchor)
 
     const handleOpen = (e) => {
@@ -18,6 +23,21 @@ const UserItem = ({user, self}) => {
 
     const handleClose = () => {
         setMenuAnchor(null)
+    }
+
+    const kickPerson = async () => {
+        setMenuAnchor(null)
+        try {
+            await ProjectsService.deletePersonProject(user.id, projectId)
+        } catch (e) {
+            switch (e.response.status) {
+                case 403:
+                    dispatch(setErrorAction('Ошибка! Отказано в доступе'))
+                    break
+                default:
+                    dispatch(setErrorAction('Ошибка! Внутренняя ошибка'))
+            }
+        }
     }
     return (
         <div className={styles.list_item} style={self ? {
@@ -37,7 +57,9 @@ const UserItem = ({user, self}) => {
             </button>
             <Menu open={openMenu} onClose={handleClose} anchorEl={menuAnchor}>
                 <MenuItem>Назначить администратором</MenuItem>
-                <MenuItem>Исключить</MenuItem>
+                <MenuItem sx={{
+                    color: 'red'
+                }} onClick={kickPerson}>Исключить</MenuItem>
                 {/*TODO назначить действия на кнопки*/}
             </Menu>
         </div>

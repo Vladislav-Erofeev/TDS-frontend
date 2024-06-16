@@ -34,11 +34,12 @@ const UsersComponent = ({projectId}) => {
                 <p>Телефон:</p>
             </div>
             {isLoading ? <CircularProgress sx={{
-                margin: 'auto'
+                    margin: 'auto'
                 }}/> :
                 <>
                     {
-                        users.map(item => <UserItem key={item.id} self={user.id === item.id} user={item} />)
+                        users.map(item => <UserItem projectId={projectId} key={item.id}
+                                                    self={user.id === item.id} user={item}/>)
                     }
                 </>
             }
