@@ -26,6 +26,14 @@ const UsersComponent = ({projectId}) => {
         setIsLoading(true)
         fetch()
     }, [])
+
+    const deleteUserFromArray = (id) => {
+        setUsers(users => {
+            let arr = [...users]
+            arr.splice(arr.findIndex(item => item.id === id), 1)
+            return arr
+        })
+    }
     return (
         <div className={styles.main}>
             <div className={styles.list_header}>
@@ -39,6 +47,7 @@ const UsersComponent = ({projectId}) => {
                 <>
                     {
                         users.map(item => <UserItem projectId={projectId} key={item.id}
+                                                    deleteCallback={deleteUserFromArray}
                                                     self={user.id === item.id} user={item}/>)
                     }
                 </>

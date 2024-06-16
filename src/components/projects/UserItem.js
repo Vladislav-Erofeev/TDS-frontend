@@ -12,7 +12,7 @@ const projectRoleDecoding = {
     'ADMIN': 'Администратор',
     'USER': ''
 }
-const UserItem = ({user, self, projectId}) => {
+const UserItem = ({user, self, projectId, deleteCallback}) => {
     const [menuAnchor, setMenuAnchor] = useState(null)
     const dispatch = useDispatch()
     const openMenu = Boolean(menuAnchor)
@@ -29,6 +29,7 @@ const UserItem = ({user, self, projectId}) => {
         setMenuAnchor(null)
         try {
             await ProjectsService.deletePersonProject(user.id, projectId)
+            deleteCallback(user.id)
         } catch (e) {
             switch (e.response.status) {
                 case 403:
