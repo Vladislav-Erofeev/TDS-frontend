@@ -80,12 +80,24 @@ export class ProjectsService {
 
     static async getAllPersonsInProject(projectId) {
         let token = await TokenService.getAccessToken()
-        let res = await axios.get(`${process.env.REACT_APP_PROJECTS_URL}/projects/${projectId}/persons`, {
+        let res = await axios.get(`${process.env.REACT_APP_PROJECTS_URL}/persons/${projectId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
 
         return res.data
+    }
+
+    static async deletePersonProject(personId, projectId) {
+        let token = await TokenService.getAccessToken()
+        await axios.delete(`${process.env.REACT_APP_PROJECTS_URL}/persons/${personId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                projectId: projectId
+            }
+        })
     }
 }

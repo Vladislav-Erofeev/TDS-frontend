@@ -4,14 +4,13 @@ import styles from "./styles/projectItem.module.css"
 import {NavLink} from "react-router-dom";
 import {Backdrop, Button, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem} from "@mui/material";
 import {ProjectsService} from "../../services/ProjectsService";
+import InviteLinkModal from "./InviteLinkModal";
 
 const ProjectItem = ({item, setProjects}) => {
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
-    const [inviteLink, setInvileLink] = useState(null)
     const openMenu = Boolean(anchorEl)
-    const [copied, setCopied] = useState(false)
-    const openInviteLink = Boolean(inviteLink)
+    const [inviteLink, setInviteLink] = useState(null)
 
     const handleOpen = (e) => {
         setAnchorEl(e.target)
@@ -35,7 +34,7 @@ const ProjectItem = ({item, setProjects}) => {
 
     const generateInviteLink = () => {
         const push = async () => {
-            setInvileLink(await ProjectsService.generateInviteToken(item.id))
+            setInviteLink(await ProjectsService.generateInviteToken(item.id))
         }
         push()
     }
@@ -93,35 +92,7 @@ const ProjectItem = ({item, setProjects}) => {
                     handleClose()
                 }}>удалить</MenuItem>
             </Menu>
-            <Dialog open={openInviteLink} onClose={() => {
-                setInvileLink(null)
-                setCopied(false)
-            }}>
-                <DialogTitle>
-                    Ссылка для приглашения
-                </DialogTitle>
-                <DialogContent sx={{
-                    display: 'flex',
-                    gap: '30px',
-                    alignItems: 'center'
-                }}>
-                    <p>http://localhost:3000/invite?token={inviteLink}</p>
-                    {copied ? <img src={'/icons/success.svg'} width={'20px'} /> :
-                        <button style={{
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer'
-                        }} onClick={() => {
-                            navigator.clipboard.writeText(`http://localhost:3000/invite?token=${inviteLink}`)
-                                .then(() => {
-                                    setCopied(true)
-                                })
-                        }}>
-                            <img src={'/icons/copy.svg'} width={'20px'}/>
-                        </button>
-                    }
-                </DialogContent>
-            </Dialog>
+            <InviteLinkModal inviteLink={inviteLink} setInviteLink={setInviteLink} />
         </>
     );
 };

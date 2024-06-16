@@ -13,3 +13,36 @@
 .back_link:hover {
     text-decoration: underline;
 }
+
+.leave_btn {
+    padding: 5px 20px;
+    border: solid;
+    background: none;
+    border-color: #de4141;
+    color: #de4141;
+    transition: 0.15s ease;
+    cursor: pointer;
+}
+
+.leave_btn:hover {
+    background-color: #de4141;
+    color: white;
+}
+
+.title {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.title button {
+    border: none;
+    background: none;
+    cursor:  pointer;
+    transition: 0.15s ease;
+}
+
+.title button:hover {
+    transform: scale(105%);
+}

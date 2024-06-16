@@ -159,6 +159,7 @@ const ChatComponent = ({projectId}) => {
                     pushMessage(editMsg, newMessage)
                 }
             }}>
+                {/*TODO запретить отправку пустого сообщения*/}
                 <TextField value={newMessage.content} onChange={(e) => {
                     setNewMessage({...newMessage, content: e.target.value })
                 }} placeholder={'Введите сообщение'} fullWidth/>

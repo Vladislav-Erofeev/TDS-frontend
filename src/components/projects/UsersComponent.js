@@ -4,8 +4,10 @@ import {ProfileService} from "../../services/ProfileService";
 import {CircularProgress} from "@mui/material";
 import styles from './styles/userComponent.module.css'
 import UserItem from "./UserItem";
+import {useSelector} from "react-redux";
 
 const UsersComponent = ({projectId}) => {
+    const user = useSelector(state => state.user)
     const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
@@ -36,7 +38,7 @@ const UsersComponent = ({projectId}) => {
                 }}/> :
                 <>
                     {
-                        users.map(item => <UserItem key={item.id} user={item} />)
+                        users.map(item => <UserItem key={item.id} self={user.id === item.id} user={item} />)
                     }
                 </>
             }

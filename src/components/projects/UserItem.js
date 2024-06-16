@@ -8,7 +8,7 @@ const projectRoleDecoding = {
     'ADMIN': 'Администратор',
     'USER': ''
 }
-const UserItem = ({user}) => {
+const UserItem = ({user, self}) => {
     const [menuAnchor, setMenuAnchor] = useState(null)
     const openMenu = Boolean(menuAnchor)
 
@@ -20,7 +20,9 @@ const UserItem = ({user}) => {
         setMenuAnchor(null)
     }
     return (
-        <div className={styles.list_item}>
+        <div className={styles.list_item} style={self ? {
+            backgroundColor: '#b1d0f1'
+        } : {} }>
             <div className={styles.base_info}>
                 <Avatar {...chatStringAvatar(user.name + " " + user.surname, '60px', '12pt')}/>
                 <div>
@@ -36,7 +38,7 @@ const UserItem = ({user}) => {
             <Menu open={openMenu} onClose={handleClose} anchorEl={menuAnchor}>
                 <MenuItem>Назначить администратором</MenuItem>
                 <MenuItem>Исключить</MenuItem>
-                // TODO назначить действия на кнопки
+                {/*TODO назначить действия на кнопки*/}
             </Menu>
         </div>
     );
