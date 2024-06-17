@@ -12,7 +12,7 @@ const projectRoleDecoding = {
     'ADMIN': 'Администратор',
     'USER': ''
 }
-const UserItem = ({user, self, projectId, deleteCallback}) => {
+const UserItem = ({user, self, projectId, deleteCallback, setRoleCallback}) => {
     const [menuAnchor, setMenuAnchor] = useState(null)
     const dispatch = useDispatch()
     const openMenu = Boolean(menuAnchor)
@@ -40,10 +40,26 @@ const UserItem = ({user, self, projectId, deleteCallback}) => {
             }
         }
     }
+
+    const setRole = async () => {
+        const newRole = user.projectRole === 'ADMIN' ? 'USER' : 'ADMIN'
+        try {
+            await ProjectsService.setNewRoleToPerson(user.id, projectId, newRole)
+            setRoleCallback(user.id, newRole)
+        } catch (e) {
+            switch (e.response.status) {
+                case 403:
+                    dispatch(setErrorAction('Ошибка! Отказано в доступе'))
+                    break
+                default:
+                    dispatch(setErrorAction('Ошибка! Внутренняя ошибка'))
+            }
+        }
+    }
     return (
         <div className={styles.list_item} style={self ? {
             backgroundColor: '#b1d0f1'
-        } : {} }>
+        } : {}}>
             <div className={styles.base_info}>
                 <Avatar {...chatStringAvatar(user.name + " " + user.surname, '60px', '12pt')}/>
                 <div>
@@ -57,7 +73,8 @@ const UserItem = ({user, self, projectId, deleteCallback}) => {
                 <img width={'25px'} src={'/icons/3844442-dot-menu-more-vertical_110310.svg'}/>
             </button>
             <Menu open={openMenu} onClose={handleClose} anchorEl={menuAnchor}>
-                <MenuItem>Назначить администратором</MenuItem>
+                {user.projectRole === 'ADMIN' ? <MenuItem onClick={setRole}>Убрать администратора</MenuItem> :
+                    <MenuItem onClick={setRole}>Назначить администратором</MenuItem>}
                 <MenuItem sx={{
                     color: 'red'
                 }} onClick={kickPerson}>Исключить</MenuItem>

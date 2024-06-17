@@ -100,4 +100,17 @@ export class ProjectsService {
             }
         })
     }
+
+    static async setNewRoleToPerson(personId, projectId, role) {
+        let token = await TokenService.getAccessToken()
+        await axios.patch(`${process.env.REACT_APP_PROJECTS_URL}/persons/${personId}`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                projectId: projectId,
+                role: role
+            }
+        })
+    }
 }

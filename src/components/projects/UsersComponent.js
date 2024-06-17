@@ -34,6 +34,17 @@ const UsersComponent = ({projectId}) => {
             return arr
         })
     }
+
+    const setRole = (id, role) => {
+        setUsers(users => {
+            let arr = [...users]
+            let ind = arr.findIndex(item => item.id === id)
+            let user = {...arr[ind]}
+            user.projectRole = role
+            arr.splice(ind, 1, user)
+            return arr
+        })
+    }
     return (
         <div className={styles.main}>
             <div className={styles.list_header}>
@@ -47,6 +58,7 @@ const UsersComponent = ({projectId}) => {
                 <>
                     {
                         users.map(item => <UserItem projectId={projectId} key={item.id}
+                                                    setRoleCallback={setRole}
                                                     deleteCallback={deleteUserFromArray}
                                                     self={user.id === item.id} user={item}/>)
                     }
