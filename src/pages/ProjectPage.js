@@ -72,18 +72,27 @@ const ProjectPage = () => {
                 <img src={'/icons/group.svg'} width={'25px'}/>
                 <p>{project.personsCount}</p>
             </div>
-            <Tabs value={tab} onChange={(e, v) => {
-                setTab(v)
-                setSearchParams({tab: v})
-            }}>
-                <Tab label={'Активность'}/>
-                <Tab label={'Пользователи'}/>
-                <Tab label={'Чат'}/>
-                <Tab label={'Комментарии'}/>
-            </Tabs>
+            <div className={styles.navigation}>
+                <Tabs value={tab} onChange={(e, v) => {
+                    setTab(v)
+                    setSearchParams({tab: v})
+                }}>
+                    <Tab label={'Активность'}/>
+                    <Tab label={'Пользователи'}/>
+                    <Tab label={'Чат'}/>
+                    <Tab label={'Комментарии'}/>
+                </Tabs>
+                <NavLink className={styles.to_map_btn} to={'map'}>На карту</NavLink>
+            </div>
 
             <TabComponent value={1} currentValue={tab} component={<UsersComponent projectId={id}/>}/>
-            <TabComponent value={2} currentValue={tab} component={<ChatComponent projectId={id}/>}/>
+            <TabComponent value={2} currentValue={tab} component={<div style={{
+                height: '63vh',
+                width: '100%',
+                margin: 'auto'
+            }}>
+                <ChatComponent projectId={id}/>
+            </div>}/>
             <InviteLinkModal inviteLink={inviteLink} setInviteLink={setInviteLink}/>
         </div>
     );

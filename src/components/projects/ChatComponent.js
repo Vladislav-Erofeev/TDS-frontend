@@ -9,6 +9,7 @@ import ChatNotificationComponent from "./ChatNotificationComponent";
 
 const ChatComponent = ({projectId}) => {
     const user = useSelector(state => state.user)
+    const [endOfChat, setEndOfChat] = useState(false)
     const [messages, setMessages] = useState([])
     const [users, setUsers] = useState({})
     const chatAreaRef = useRef()
@@ -140,7 +141,11 @@ const ChatComponent = ({projectId}) => {
     }
 
     const loadMoreMessages = async () => {
+        if (endOfChat)
+            return
         let res = await ProjectsService.fetchMessages(projectId, page + 1)
+        if (res.length === 0 && page !== 0)
+            setEndOfChat(true)
         setMessages(messages => {
             return [...res.reverse().map(msg => msg.message), ...messages]
         })
@@ -155,7 +160,12 @@ const ChatComponent = ({projectId}) => {
                     loadMoreMessages()
                 }
             }}>
-                {chatAreaRef.current ? <CircularProgress sx={{margin: 'auto'}}/> : null}
+                {messages.length === 0 ? <h1 style={{
+                    margin: 'auto',
+                    color: '#1c8ee9'
+                }}>Начните общение прямо сейчас</h1> : null}
+                {chatAreaRef.current && !endOfChat && messages.length > 0 && chatAreaRef.current.scrollHeight > chatAreaRef.current.clientHeight  ?
+                    <CircularProgress sx={{margin: 'auto'}}/> : null}
                 {
                     messages.map(item =>
                         item.messageType === "USER_MESSAGE" ?

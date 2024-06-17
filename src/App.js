@@ -19,6 +19,7 @@ import GeocodingPage from "./pages/GeocodingPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import ProjectPage from "./pages/ProjectPage";
 import InvitePage from "./pages/InvitePage";
+import MapProjectPage from "./pages/MapProjectPage";
 
 
 function App() {
@@ -48,12 +49,17 @@ function App() {
                     <Route path={'geocoding'} element={<GeocodingPage/>}/>
                     <Route path={'objects'} element={<ObjectsPage/>}/>
                     <Route path={'profile'} element={<ProfilePage/>}/>
-                    <Route path={'projects'} element={<ProjectsPage/>}/>
-                    <Route path={'projects/:id/:name'} element={<ProjectPage/>}/>
+                    <Route path={'projects'}>
+                        <Route element={<ProjectsPage/>} index/>
+                        <Route path={':id/:name'}>
+                            <Route element={<ProjectPage/>} index/>
+                            <Route path={'map'} element={<MapProjectPage/>}/>
+                        </Route>
+                    </Route>
                 </Route>
                 <Route path={'/login'} element={<LoginPage/>}/>
                 <Route path={'/register'} element={<RegisterPage/>}/>
-                <Route path={'/invite'} element={<InvitePage />} />
+                <Route path={'/invite'} element={<InvitePage/>}/>
             </Routes>
             <SuccessAlert/>
             <ErrorAlert/>

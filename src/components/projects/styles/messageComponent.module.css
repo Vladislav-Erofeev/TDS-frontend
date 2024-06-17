@@ -7,9 +7,10 @@
     border-radius: 10px;
     padding: 10px;
     padding-bottom: 5px;
-    max-width: 40%;
     white-space: break-spaces;
     word-break: break-all;
+    max-width: 75%;
+    hyphens: auto;
 }
 
 .self_message {

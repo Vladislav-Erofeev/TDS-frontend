@@ -43,6 +43,25 @@
     transition: 0.15s ease;
 }
 
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.to_map_btn {
+    background-color: #1b8ae5;
+    padding: 5px 20px;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.to_map_btn:hover {
+    background-color: #2088da;
+}
+
 .title button:hover {
     transform: scale(105%);
 }
