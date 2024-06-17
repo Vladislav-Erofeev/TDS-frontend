@@ -5,6 +5,7 @@ import MessageComponent from "./MessageComponent";
 import {useSelector} from "react-redux";
 import {ProjectsService} from "../../services/ProjectsService";
 import {ProfileService} from "../../services/ProfileService";
+import ChatNotificationComponent from "./ChatNotificationComponent";
 
 const ChatComponent = ({projectId}) => {
     const user = useSelector(state => state.user)
@@ -14,6 +15,7 @@ const ChatComponent = ({projectId}) => {
     const [newMessage, setNewMessage] = useState({
         personId: user.id,
         projectId: projectId,
+        messageType: 'USER_MESSAGE',
         content: ''
     })
     const stompRef = useRef()
@@ -121,14 +123,22 @@ const ChatComponent = ({projectId}) => {
         })
         setEditMsg(false)
     }
+
+    const fetchPersonById = async (id) => {
+        let persons = {...users}
+        persons[id] = await ProfileService.getProfileById(id)
+        setUsers(persons)
+    }
     return (
         <div className={styles.chat}>
             <div ref={chatAreaRef} className={styles.chat_area}>
                 {
                     messages.map(item =>
-                        <MessageComponent key={item.id} item={item} sender={users[item.personId]}
-                                          rightClickCallback={setAnchorMsg}
-                                          self={item.personId === user.id}/>
+                        item.messageType === 'USER_MESSAGE' ?
+                            <MessageComponent key={item.id} item={item} sender={users[item.personId]}
+                                              rightClickCallback={setAnchorMsg}
+                                              self={item.personId === user.id}/>
+                            : <ChatNotificationComponent fetchUser={fetchPersonById} item={item} name={users[item.personId]}/>
                     )
                 }
                 <Menu open={openMessageMenu} onClose={() => {
@@ -161,7 +171,7 @@ const ChatComponent = ({projectId}) => {
             }}>
                 {/*TODO запретить отправку пустого сообщения*/}
                 <TextField value={newMessage.content} onChange={(e) => {
-                    setNewMessage({...newMessage, content: e.target.value })
+                    setNewMessage({...newMessage, content: e.target.value})
                 }} placeholder={'Введите сообщение'} fullWidth/>
                 <button className={styles.send_btn} onClick={() => {
                     pushMessage(editMsg, newMessage)
