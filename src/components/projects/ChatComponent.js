@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Menu, MenuItem, TextField} from "@mui/material";
+import {CircularProgress, Menu, MenuItem, TextField} from "@mui/material";
 import styles from './styles/chatComponent.module.css'
 import MessageComponent from "./MessageComponent";
 import {useSelector} from "react-redux";
@@ -26,7 +26,10 @@ const ChatComponent = ({projectId}) => {
     })
 
     const openMessageMenu = Boolean(anchorMsg.anchor)
+    const [page, setPage] = useState(0)
     const [editMsg, setEditMsg] = useState(false)
+    const [lastScrollHeight, setLastScrollHeight] = useState(0)
+    const [unvisibleCounter, setUnvisibleCounter] = useState(0)
 
     function handleMessage(message) {
         switch (message.type) {
@@ -92,11 +95,16 @@ const ChatComponent = ({projectId}) => {
     }
 
     useEffect(() => {
-        chatAreaRef.current.scrollTo(0, chatAreaRef.current.scrollHeight)
+        if (chatAreaRef.current.scrollTop === 0)
+            chatAreaRef.current.scrollTo(0, chatAreaRef.current.scrollHeight - lastScrollHeight)
+        else if (chatAreaRef.current.scrollTop + chatAreaRef.current.clientHeight + 100 > chatAreaRef.current.scrollHeight)
+            chatAreaRef.current.scrollTo(0, chatAreaRef.current.scrollHeight)
+        else
+            setUnvisibleCounter(c => c + 1)
     }, [messages])
 
     const fetchMessages = async () => {
-        setMessages((await ProjectsService.fetchMessages(projectId)).map(msg => msg.message))
+        setMessages((await ProjectsService.fetchMessages(projectId)).map(msg => msg.message).reverse())
     }
 
     const fetchPersons = async () => {
@@ -114,6 +122,7 @@ const ChatComponent = ({projectId}) => {
         if (editMsg) {
             sendEditEvent(anchorMsg.id, message)
         } else {
+            chatAreaRef.current.scrollTo(0, chatAreaRef.current.scrollHeight)
             sendMessage(message)
         }
         setNewMessage({
@@ -129,18 +138,42 @@ const ChatComponent = ({projectId}) => {
         persons[id] = await ProfileService.getProfileById(id)
         setUsers(persons)
     }
+
+    const loadMoreMessages = async () => {
+        let res = await ProjectsService.fetchMessages(projectId, page + 1)
+        setMessages(messages => {
+            return [...res.reverse().map(msg => msg.message), ...messages]
+        })
+        setPage(page => page + 1)
+    }
+
     return (
         <div className={styles.chat}>
-            <div ref={chatAreaRef} className={styles.chat_area}>
+            <div ref={chatAreaRef} className={styles.chat_area} onScroll={(e) => {
+                if (e.target.scrollTop === 0) {
+                    setLastScrollHeight(e.target.scrollHeight)
+                    loadMoreMessages()
+                }
+            }}>
+                {chatAreaRef.current ? <CircularProgress sx={{margin: 'auto'}}/> : null}
                 {
                     messages.map(item =>
-                        item.messageType === 'USER_MESSAGE' ?
+                        item.messageType === "USER_MESSAGE" ?
                             <MessageComponent key={item.id} item={item} sender={users[item.personId]}
                                               rightClickCallback={setAnchorMsg}
                                               self={item.personId === user.id}/>
-                            : <ChatNotificationComponent fetchUser={fetchPersonById} item={item} name={users[item.personId]}/>
+                            : <ChatNotificationComponent fetchUser={fetchPersonById} item={item}
+                                                         key={item.id}
+                                                         name={users[item.personId]}/>
                     )
                 }
+                {unvisibleCounter > 0 ? <button className={styles.down_btn} onClick={() => {
+                    chatAreaRef.current.scrollTo(0, chatAreaRef.current.scrollHeight)
+                    setUnvisibleCounter(0)
+                }}>
+                    <p className={styles.unvisible_counter}>{unvisibleCounter}</p>
+                    <img src={'/icons/-expand-more_89793.svg'} width={'35px'}/>
+                </button> : null}
                 <Menu open={openMessageMenu} onClose={() => {
                     setAnchorMsg({
                         anchor: null,

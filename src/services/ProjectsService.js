@@ -67,11 +67,14 @@ export class ProjectsService {
         return res.data
     }
 
-    static async fetchMessages(projectId) {
+    static async fetchMessages(projectId, page = 0) {
         let token = await TokenService.getAccessToken()
         let res = await axios.get(`${process.env.REACT_APP_PROJECTS_URL}/messages/${projectId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
+            },
+            params: {
+                page: page
             }
         })
 
