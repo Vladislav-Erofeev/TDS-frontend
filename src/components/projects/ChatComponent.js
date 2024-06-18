@@ -63,13 +63,16 @@ const ChatComponent = ({projectId}) => {
         let client = Stomp.over(Sockjs);
         stompRef.current = client
         client.connect({}, () => {
-            client.subscribe(`/messages/${projectId}`, (e) => {
+            client.subscribe(`/broker/chat/${projectId}`, (e) => {
                 handleMessage(JSON.parse(e.body))
             })
         }, () => {
         })
         fetchMessages()
         fetchPersons()
+        return () => {
+            client.disconnect()
+        }
     }, [])
 
     const sendMessage = (message) => {

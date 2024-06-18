@@ -12,7 +12,7 @@ export function hasRole(...role) {
     return false
 }
 
-function stringToColor(string) {
+export function stringToColor(string) {
     let hash = 0;
     let i;
 

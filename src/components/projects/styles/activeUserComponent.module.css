@@ -1,0 +1,72 @@
+.main {
+    width: 500px;
+    position: absolute;
+    height: calc(100% - 80px);
+    top: 80px;
+    right: 0;
+    background-color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 0.5s ease-out;
+}
+
+.expand_btn {
+    position: absolute;
+    left: -35px;
+    top: 80px;
+    width: 35px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #aeaeae;
+    border: none;
+    cursor: pointer;
+}
+
+.user_item {
+    display: grid;
+    grid-template-columns: 1fr 150px 80px;
+    gap: 20px;
+    align-items: center;
+    border:solid;
+    border-color: #d7d7d7;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.user_item > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.username {
+    color: #1c8ee9;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+.mouse {
+    position: absolute;
+    transition: 0.4s ease-in;
+}
+
+.pointer {
+    width: 20px;
+    height: 20px;
+}
+
+.mouse p {
+    color: white;
+    font-size: 10pt;
+    padding: 5px;
+}
